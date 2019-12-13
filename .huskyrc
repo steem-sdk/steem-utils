@@ -1,5 +1,4 @@
 {
   "hooks": {
-    "pre-push": "./node_modules/.bin/esdoc && npm version minor && npm publish"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "steem-utils",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "description": "Swiss army knife of helper functions for Steem",
   "main": "index.js",
   "scripts": {
@@ -8,9 +8,7 @@
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
     "docs": "./node_modules/.bin/esdoc",
     "publish": "git push",
-    "preversion": "./node_modules/.bin/esdoc",
-    "version": "git add .",
-    "postversion": "npm publish && git push"
+    "version": "git add ."
   },
   "keywords": [
     "css",
