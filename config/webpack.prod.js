@@ -21,6 +21,14 @@ module.exports = merge(common, {
     index: paths.src + "/lib/index",
   },
   output: {
+    filename: 'steemutils.min.js',
+    libraryTarget: 'umd',
+    library: 'steemutils',
+    // Workaround to fix umd build, restore webpack v3 behaviour
+    // https://github.com/webpack/webpack/issues/6677
+    // https://github.com/webpack/webpack/issues/6642
+    globalObject: 'typeof self !== \'undefined\' ? self : this',
+
     // path: path.join(__dirname, "dist"),
     path: paths.build,
     filename: "[name].js",
