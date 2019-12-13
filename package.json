@@ -8,7 +8,9 @@
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
     "docs": "./node_modules/.bin/esdoc",
     "publish": "git push",
-    "version": "git add -A"
+    "preversion": "npm run docs",
+    "version": "git add -A && git commit -m 'update docs'",
+    "postversion": "npm publish && git push"
   },
   "keywords": [
     "css",
@@ -45,7 +47,6 @@
     "eslint-plugin-standard": "^4.0.1",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.1.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
