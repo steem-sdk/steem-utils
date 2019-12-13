@@ -9,10 +9,10 @@
     "docs": "./node_modules/.bin/esdoc"
   },
   "keywords": [
-    "steem",
-    "steem utils"
+    "css",
+    "generic"
   ],
-  "author": "Dzivenu <makafuigdzivenu@gmail.com>",
+  "author": "Steem SDK (https://steemsdk.com/)",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -43,6 +43,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.1.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -67,15 +68,9 @@
     "type": "git",
     "url": "https://github.com/steem-sdk/steem-utils"
   },
-  "keywords": [
-    "css",
-    "generic"
-  ],
-  "author": "Steem SDK (https://steemsdk.com/)",
   "contributors": [
     "Dzivenu <makafuigdzivenu@gmail.com> (https://dzivenu.com/)"
   ],
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/steemsdk/steem-utils/issues"
   },
