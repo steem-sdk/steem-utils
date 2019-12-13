@@ -1,6 +1,6 @@
 {
   "name": "steem-utils",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Swiss army knife of helper functions for Steem",
   "main": "index.js",
   "scripts": {
