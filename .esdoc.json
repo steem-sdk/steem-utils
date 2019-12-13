@@ -12,11 +12,11 @@
       "option": {
         "logo": "./src/images/steem-sdk-logo.png",
         "title": "Steem Utils",
-        "description": "Swiff-army knife of utilities for Steem data",
-        "repository": "https://github.com/foo/bar",
-        "site": "http://my-library.org",
-        "author": "https://twitter.com/foo",
-        "image": "http://my-library.org/logo.png"
+        "description": "Swiss-army knife of utilities for Steem data",
+        "repository": "https://github.com/steem-sdk/steem-utils",
+        "site": "https://steemsdk.com",
+        "author": "https://steemsdk.com",
+        "image": "https://steemsdk.com/logo.png"
       }
     }
   ]
