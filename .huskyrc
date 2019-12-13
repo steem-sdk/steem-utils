@@ -1,4 +1,5 @@
 {
   "hooks": {
+    "pre-push": "npm run docs && npm version minor && npm publish"
   }
 }

@@ -8,7 +8,7 @@
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
     "docs": "./node_modules/.bin/esdoc",
     "publish": "git push",
-    "version": "git add ."
+    "version": "git add -A"
   },
   "keywords": [
     "css",
