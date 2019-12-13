@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "lib/constants.js",
-    "content": "/**\r\n * @ignore\r\n*/\r\nexport const rendererDefaults = (config = {}) => {\r\n  if (!config.imageProxyFn) config.imageProxyFn = (url) => url\r\n  if (!config.usertagUrlFn) config.usertagUrlFn = (account) => \"/@\" + account\r\n  if (!config.hashtagUrlFn) config.hashtagUrlFn = (hashtag) => \"/issue/\" + hashtag\r\n  if (!config.isLinkSafeFn) config.isLinkSafeFn = (url) => true\r\n\r\n  return {\r\n    baseUrl: config.baseUrl || \"https://steem.online/\",\r\n    breaks: config.breaks || true,\r\n    skipSanitization: config.skipSanitization || false,\r\n    allowInsecureScriptTags: config.allowInsecureScriptTags || false,\r\n    addNofollowToLinks: config.addNofollowToLinks || true,\r\n    doNotShowImages: config.doNotShowImages || false,\r\n    ipfsPrefix: config.ipfsPrefix || \"\",\r\n    assetsWidth: config.assetsWidth || 640,\r\n    assetsHeight: config.assetsHeight || 480,\r\n    imageProxyFn: config.imageProxyFn,\r\n    usertagUrlFn: config.usertagUrlFn,\r\n    hashtagUrlFn: config.hashtagUrlFn,\r\n    isLinkSafeFn: config.isLinkSafeFn\r\n  }\r\n}\r\n",
+    "content": "/**\r\n * @ignore\r\n*/\r\nexport const rendererDefaults = (config = {}) => {\r\n  if (!config.imageProxyFn) config.imageProxyFn = (url) => url\r\n  if (!config.usertagUrlFn) config.usertagUrlFn = (account) => \"/@\" + account\r\n  if (!config.hashtagUrlFn) config.hashtagUrlFn = (hashtag) => \"/issue/\" + hashtag\r\n  if (!config.isLinkSafeFn) config.isLinkSafeFn = (url) => true\r\n\r\n  return {\r\n    baseUrl: config.baseUrl || \"https://steem.online/\",\r\n    breaks: config.breaks || true,\r\n    skipSanitization: config.skipSanitization || false,\r\n    allowInsecureScriptTags: config.allowInsecureScriptTags || false,\r\n    addNofollowToLinks: config.addNofollowToLinks || true,\r\n    doNotShowImages: config.doNotShowImages || false,\r\n    ipfsPrefix: config.ipfsPrefix || \"\",\r\n    assetsWidth: config.assetsWidth || 640,\r\n    assetsHeight: config.assetsHeight || 480,\r\n    imageProxyFn: config.imageProxyFn,\r\n    usertagUrlFn: config.usertagUrlFn,\r\n    hashtagUrlFn: config.hashtagUrlFn,\r\n    isLinkSafeFn: config.isLinkSafeFn\r\n  }\r\n}\r\n\r\n/**\r\n * @ignore\r\n*/\r\nexport const voterCount = 10\r\n",
     "static": true,
     "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/constants.js",
     "access": "public",
@@ -609,9 +609,29 @@
   },
   {
     "__docId__": 50,
+    "kind": "variable",
+    "name": "voterCount",
+    "memberof": "lib/constants.js",
+    "static": true,
+    "longname": "lib/constants.js~voterCount",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/constants.js",
+    "importStyle": "{voterCount}",
+    "description": "",
+    "lineNumber": 30,
+    "ignore": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 51,
     "kind": "file",
     "name": "lib/format.js",
-    "content": "/**\r\n * @ignore\r\n*/\r\nfunction log10 (str) {\r\n  const leadingDigits = parseInt(str.substring(0, 4))\r\n  const log = Math.log(leadingDigits) / Math.LN10 + 0.00000001\r\n  const n = str.length - 1\r\n  return n + (log - parseInt(log))\r\n}\r\n\r\nconst formatRep = rep2 => {\r\n  if (rep2 == null) return rep2\r\n  let rep = String(rep2)\r\n  const neg = rep.charAt(0) === \"-\"\r\n  rep = neg ? rep.substring(1) : rep\r\n\r\n  let out = log10(rep)\r\n  if (isNaN(out)) out = 0\r\n  out = Math.max(out - 9, 0) // @ -9, $0.50 earned is approx magnitude 1\r\n  out = (neg ? -1 : 1) * out\r\n  out = out * 9 + 25 // 9 points per magnitude. center at 25\r\n  // base-line 0 to darken and < 0 to auto hide (grep rephide)\r\n  out = parseInt(out)\r\n  return out\r\n}\r\n\r\nconst formatVotes = (raw = [], count = voterCount, downvoted = false) => {\r\n  if (!raw.length) return { votes: raw, len: 0 }\r\n\r\n  // remove 0 percent votes, which means user removed vote\r\n  let activeVotes = raw.filter(({ percent }) => Math.sign(percent) !== 0)\r\n\r\n  // get count\r\n  let len = activeVotes.length\r\n\r\n  // now sort by vote weight\r\n  let sortedVotes = activeVotes.sort((a, b) => Math.abs(parseInt(a.rshares)) > Math.abs(parseInt(b.rshares)) ? -1 : 1)\r\n\r\n  // return only names with vote type: upvote/downvote\r\n  let votes = sortedVotes.map(({ voter, percent }) => Math.sign(percent) > 0 ? `+ ${voter}` : `- ${voter}`)\r\n\r\n  // trim according to length\r\n  if (count < len) {\r\n    votes = votes.slice(0, count)\r\n    votes.push(`...and ${len - count} others`)\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  } else {\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  }\r\n}\r\n\r\nconst formatPayout = (post, fix = 0) => {\r\n  const pendingPayout = parseFloat(post.pending_payout_value)\r\n  const totalPayout = parseFloat(post.total_payout_value)\r\n  const curatorPayout = parseFloat(post.curator_payout_value)\r\n  return +(totalPayout + pendingPayout + curatorPayout).toFixed(fix)\r\n}\r\n\r\nconst format = { formatRep, formatPayout, formatVotes }\r\n\r\nexport {\r\n  format as default, formatRep, formatPayout, formatVotes\r\n}\r\n\r\n",
+    "content": "\r\nimport { voterCount } from \"./constants\"\r\n\r\n/**\r\n * @ignore\r\n*/\r\nfunction log10 (str) {\r\n  const leadingDigits = parseInt(str.substring(0, 4))\r\n  const log = Math.log(leadingDigits) / Math.LN10 + 0.00000001\r\n  const n = str.length - 1\r\n  return n + (log - parseInt(log))\r\n}\r\n\r\nconst formatRep = rep2 => {\r\n  if (rep2 == null) return rep2\r\n  let rep = String(rep2)\r\n  const neg = rep.charAt(0) === \"-\"\r\n  rep = neg ? rep.substring(1) : rep\r\n\r\n  let out = log10(rep)\r\n  if (isNaN(out)) out = 0\r\n  out = Math.max(out - 9, 0) // @ -9, $0.50 earned is approx magnitude 1\r\n  out = (neg ? -1 : 1) * out\r\n  out = out * 9 + 25 // 9 points per magnitude. center at 25\r\n  // base-line 0 to darken and < 0 to auto hide (grep rephide)\r\n  out = parseInt(out)\r\n  return out\r\n}\r\n\r\nconst formatVotes = (raw = [], count = voterCount, downvoted = false) => {\r\n  if (!raw.length) return { votes: raw, len: 0 }\r\n\r\n  // remove 0 percent votes, which means user removed vote\r\n  const activeVotes = raw.filter(({ percent }) => Math.sign(percent) !== 0)\r\n\r\n  // get count\r\n  const len = activeVotes.length\r\n\r\n  // now sort by vote weight\r\n  const sortedVotes = activeVotes.sort((a, b) => Math.abs(parseInt(a.rshares)) > Math.abs(parseInt(b.rshares)) ? -1 : 1)\r\n\r\n  // return only names with vote type: upvote/downvote\r\n  let votes = sortedVotes.map(({ voter, percent }) => Math.sign(percent) > 0 ? `+ ${voter}` : `- ${voter}`)\r\n\r\n  // trim according to length\r\n  if (count < len) {\r\n    votes = votes.slice(0, count)\r\n    votes.push(`...and ${len - count} others`)\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  } else {\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  }\r\n}\r\n\r\nconst formatPayout = (post, fix = 0) => {\r\n  const pendingPayout = parseFloat(post.pending_payout_value)\r\n  const totalPayout = parseFloat(post.total_payout_value)\r\n  const curatorPayout = parseFloat(post.curator_payout_value)\r\n  return +(totalPayout + pendingPayout + curatorPayout).toFixed(fix)\r\n}\r\n\r\nconst format = { formatRep, formatPayout, formatVotes }\r\n\r\nexport {\r\n  format as default, formatRep, formatPayout, formatVotes\r\n}\r\n\r\n",
     "static": true,
     "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/format.js",
     "access": "public",
@@ -619,7 +639,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 51,
+    "__docId__": 52,
     "kind": "function",
     "name": "log10",
     "memberof": "lib/format.js",
@@ -632,7 +652,7 @@
     "importPath": "steem-utils/lib/format.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 4,
+    "lineNumber": 7,
     "ignore": true,
     "params": [
       {
@@ -649,7 +669,7 @@
     }
   },
   {
-    "__docId__": 52,
+    "__docId__": 53,
     "kind": "variable",
     "name": "format",
     "memberof": "lib/format.js",
@@ -660,7 +680,7 @@
     "importPath": "steem-utils/lib/format.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 61,
+    "lineNumber": 64,
     "undocument": true,
     "type": {
       "types": [
@@ -669,7 +689,7 @@
     }
   },
   {
-    "__docId__": 53,
+    "__docId__": 54,
     "kind": "function",
     "name": "formatRep",
     "memberof": "lib/format.js",
@@ -682,7 +702,7 @@
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatRep}",
     "description": null,
-    "lineNumber": 11,
+    "lineNumber": 14,
     "undocument": true,
     "params": [
       {
@@ -699,7 +719,7 @@
     }
   },
   {
-    "__docId__": 54,
+    "__docId__": 55,
     "kind": "function",
     "name": "formatPayout",
     "memberof": "lib/format.js",
@@ -712,7 +732,7 @@
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatPayout}",
     "description": null,
-    "lineNumber": 54,
+    "lineNumber": 57,
     "undocument": true,
     "params": [
       {
@@ -738,7 +758,7 @@
     }
   },
   {
-    "__docId__": 55,
+    "__docId__": 56,
     "kind": "function",
     "name": "formatVotes",
     "memberof": "lib/format.js",
@@ -751,7 +771,7 @@
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatVotes}",
     "description": null,
-    "lineNumber": 27,
+    "lineNumber": 30,
     "undocument": true,
     "params": [
       {
@@ -789,7 +809,7 @@
     }
   },
   {
-    "__docId__": 56,
+    "__docId__": 57,
     "kind": "file",
     "name": "lib/helpers.js",
     "content": "/**\r\n * @ignore\r\n*/\r\nexport const argType = arg => {\r\n  if (Array.isArray(arg)) {\r\n    return \"array\"\r\n  } else if (Object.prototype.toString.call(arg) === \"[object Object]\") {\r\n    return \"object\"\r\n  } else if (typeof arg.valueOf() === \"string\") {\r\n    return \"string\"\r\n  } else if (typeof arg.valueOf() === \"number\") {\r\n    return \"number\"\r\n  } else if (typeof arg.valueOf() === \"boolean\") {\r\n    return \"boolean\"\r\n  }\r\n}\r\n\r\n/**\r\n * @ignore\r\n*/\r\nexport const retrieveVotes = votes => {\r\n  if (!Array.isArray(votes) && !Object.prototype.toString.call(votes) === \"[object Object]\") {\r\n    throw new Error(\"Invalid parameter\")\r\n  } else if (Object.prototype.toString.call(votes) === \"[object Object]\") {\r\n    votes = votes.active_votes\r\n    if (!Array.isArray(votes)) {\r\n      throw new Error(\"Invalid parameter\")\r\n    }\r\n  }\r\n  return votes\r\n}\r\n",
@@ -800,7 +820,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 57,
+    "__docId__": 58,
     "kind": "function",
     "name": "argType",
     "memberof": "lib/helpers.js",
@@ -830,7 +850,7 @@
     }
   },
   {
-    "__docId__": 58,
+    "__docId__": 59,
     "kind": "function",
     "name": "retrieveVotes",
     "memberof": "lib/helpers.js",
@@ -860,7 +880,7 @@
     }
   },
   {
-    "__docId__": 59,
+    "__docId__": 60,
     "kind": "file",
     "name": "lib/index.js",
     "content": "\r\nimport parse from \"./parse\"\r\nimport validate from \"./validate\"\r\nimport format from \"./format\"\r\nimport stats from \"./stats\"\r\nimport sort from \"./sort\"\r\n\r\nconst lib = { stats, sort, parse, format }\r\n\r\nexport {\r\n  lib as default, stats, sort, parse, format\r\n}\r\n",
@@ -871,7 +891,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 60,
+    "__docId__": 61,
     "kind": "variable",
     "name": "lib",
     "memberof": "lib/index.js",
@@ -891,7 +911,7 @@
     }
   },
   {
-    "__docId__": 61,
+    "__docId__": 62,
     "kind": "file",
     "name": "lib/parse.js",
     "content": "import { DefaultRenderer } from \"steem-content-renderer\"\r\nimport { rendererDefaults } from \"./constants\"\r\nimport { argType } from \"./helpers\"\r\n\r\nconst parsePost = (content, options) => {\r\n  const config = rendererDefaults(options)\r\n  const renderer = new DefaultRenderer(config)\r\n\r\n  const type = argType(content)\r\n\r\n  if (type === \"string\") {\r\n    return renderer.render(content)\r\n  } else if (type === \"object\") {\r\n    if (content.body) return renderer.render(content.body)\r\n  }\r\n  return false\r\n}\r\n\r\nconst parsePosts = async (content, options) => {\r\n  const config = rendererDefaults(options)\r\n  const renderer = new DefaultRenderer(config)\r\n\r\n  const promises = content.map(async post => {\r\n    const type = argType(post)\r\n\r\n    if (type === \"string\") {\r\n      return renderer.render(post)\r\n    } else if (type === \"object\") {\r\n      return renderer.render(content.body)\r\n    }\r\n  })\r\n\r\n  const posts = await Promise.all(promises)\r\n  return posts\r\n}\r\n\r\nconst parse = { parsePost, parsePosts }\r\n\r\nexport {\r\n  parse as default, parsePost, parsePosts\r\n}\r\n",
@@ -902,7 +922,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 62,
+    "__docId__": 63,
     "kind": "variable",
     "name": "parse",
     "memberof": "lib/parse.js",
@@ -922,7 +942,7 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 64,
     "kind": "function",
     "name": "parsePost",
     "memberof": "lib/parse.js",
@@ -958,7 +978,7 @@
     }
   },
   {
-    "__docId__": 64,
+    "__docId__": 65,
     "kind": "function",
     "name": "parsePosts",
     "memberof": "lib/parse.js",
@@ -994,7 +1014,7 @@
     }
   },
   {
-    "__docId__": 65,
+    "__docId__": 66,
     "kind": "file",
     "name": "lib/sort.js",
     "content": "\r\nimport { retrieveVotes } from \"./helpers\"\r\n\r\nconst sortVotes = votes => {\r\n  votes = retrieveVotes(votes)\r\n\r\n  const upVotes = votes.filter((vote) => vote.percent > 0)\r\n  const downVotes = votes.filter((vote) => vote.percent < 0)\r\n  const removedVotes = votes.filter((vote) => vote.percent === 0)\r\n\r\n  return {\r\n    upVotes, downVotes, removedVotes\r\n  }\r\n}\r\n\r\nconst sort = { sortVotes }\r\n\r\nexport {\r\n  sort as default, sortVotes\r\n}\r\n",
@@ -1005,7 +1025,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 66,
+    "__docId__": 67,
     "kind": "variable",
     "name": "sort",
     "memberof": "lib/sort.js",
@@ -1025,7 +1045,7 @@
     }
   },
   {
-    "__docId__": 67,
+    "__docId__": 68,
     "kind": "function",
     "name": "sortVotes",
     "memberof": "lib/sort.js",
@@ -1055,7 +1075,7 @@
     }
   },
   {
-    "__docId__": 68,
+    "__docId__": 69,
     "kind": "file",
     "name": "lib/stats.js",
     "content": "\r\nimport { retrieveVotes } from \"./helpers\"\r\n\r\nconst voteStats = votes => {\r\n  votes = retrieveVotes(votes)\r\n\r\n  const total = votes.length\r\n  const upVotes = votes.filter((vote) => vote.percent > 0).length\r\n  const downVotes = votes.filter((vote) => vote.percent < 0).length\r\n  const removedVotes = votes.filter((vote) => vote.percent === 0).length\r\n\r\n  return {\r\n    total, upVotes, downVotes, removedVotes\r\n  }\r\n}\r\n\r\nconst stats = { voteStats }\r\n\r\nexport {\r\n  stats as default, voteStats\r\n}\r\n",
@@ -1066,7 +1086,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 69,
+    "__docId__": 70,
     "kind": "variable",
     "name": "stats",
     "memberof": "lib/stats.js",
@@ -1086,7 +1106,7 @@
     }
   },
   {
-    "__docId__": 70,
+    "__docId__": 71,
     "kind": "function",
     "name": "voteStats",
     "memberof": "lib/stats.js",
@@ -1116,7 +1136,7 @@
     }
   },
   {
-    "__docId__": 71,
+    "__docId__": 72,
     "kind": "file",
     "name": "lib/validate.js",
     "content": "\r\n/**\r\n* This validates account name\r\n*/\r\nconst validateAccount = value => {\r\n  let i, label, len\r\n\r\n  if (!value) {\r\n    return \"Account name should not be empty\"\r\n  }\r\n\r\n  const length = value.length\r\n\r\n  if (length < 3) {\r\n    return \"Account name should be at least 3 characters long\"\r\n  }\r\n  if (length > 16) {\r\n    return \"Account name should be not be more than 16 characters\"\r\n  }\r\n\r\n  const ref = value.split(\".\")\r\n\r\n  for (i = 0, len = ref.length; i < len; i++) {\r\n    label = ref[i]\r\n    if (!/^[a-z]/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!/^[a-z0-9-]*$/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (/--/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!/[a-z0-9]$/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!(label.length >= 3)) {\r\n      return \"Invalid account\"\r\n    }\r\n  }\r\n  return true\r\n}\r\n\r\nconst validate = { validateAccount }\r\n\r\nexport {\r\n  validate as default, validateAccount\r\n}\r\n",
@@ -1127,7 +1147,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 72,
+    "__docId__": 73,
     "kind": "variable",
     "name": "validate",
     "memberof": "lib/validate.js",
@@ -1147,7 +1167,7 @@
     }
   },
   {
-    "__docId__": 73,
+    "__docId__": 74,
     "kind": "function",
     "name": "validateAccount",
     "memberof": "lib/validate.js",
@@ -1177,7 +1197,7 @@
   },
   {
     "kind": "index",
-    "content": "# Steem utils\n\n// swiss army knife for steem ops",
+    "content": "# Steem utils\n\nSwiss army knife for steem ops\n\n## Installation\n\n### Node\n\n`yarn add steem-utils`\n\n### Browser\n\n`<script src=\"https://unpkg.com/steem-utils\"></script>`\n\n## Documentation\n\n[utils-js.steemsdk.com](utils-js.steemsdk.com)\n",
     "longname": "C:\\Users\\ASUS Ultrabook\\Desktop\\Projects\\Steem Inc\\Projects\\steem sdk\\lib\\js\\utils\\README.md",
     "name": "./README.md",
     "static": true,
@@ -1185,7 +1205,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"steem-utils\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Steem Utils\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js\",\n    \"build\": \"cross-env NODE_ENV=production webpack --config config/webpack.prod.js\",\n    \"docs\": \"./node_modules/.bin/esdoc\"\n  },\n  \"keywords\": [\n    \"webpack\",\n    \"webpack 4\",\n    \"webpack boilerplate\",\n    \"boilerplate\",\n    \"hmr\"\n  ],\n  \"author\": \"Tania Rascia <tania@taniarascia.com>\",\n  \"license\": \"MIT\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.5.5\",\n    \"@babel/plugin-proposal-class-properties\": \"^7.5.5\",\n    \"@babel/plugin-transform-runtime\": \"^7.7.6\",\n    \"@babel/preset-env\": \"^7.5.5\",\n    \"babel-eslint\": \"^10.0.3\",\n    \"babel-loader\": \"^8.0.6\",\n    \"clean-webpack-plugin\": \"^3.0.0\",\n    \"copy-webpack-plugin\": \"^5.0.4\",\n    \"cross-env\": \"^5.2.1\",\n    \"css-loader\": \"^3.2.0\",\n    \"cssnano\": \"^4.1.10\",\n    \"dsteem\": \"^0.11.3\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-brand-plugin\": \"^1.0.1\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"esdoc-undocumented-identifier-plugin\": \"^1.0.0\",\n    \"esdoc-unexported-identifier-plugin\": \"^1.0.0\",\n    \"eslint\": \"^6.2.2\",\n    \"eslint-config-standard\": \"^14.1.0\",\n    \"eslint-friendly-formatter\": \"^4.0.1\",\n    \"eslint-loader\": \"^3.0.0\",\n    \"eslint-plugin-import\": \"^2.19.1\",\n    \"eslint-plugin-node\": \"^10.0.0\",\n    \"eslint-plugin-promise\": \"^4.2.1\",\n    \"eslint-plugin-standard\": \"^4.0.1\",\n    \"file-loader\": \"^4.2.0\",\n    \"html-webpack-plugin\": \"^3.2.0\",\n    \"mini-css-extract-plugin\": \"^0.8.0\",\n    \"node-sass\": \"^4.12.0\",\n    \"optimize-css-assets-webpack-plugin\": \"^5.0.3\",\n    \"postcss-loader\": \"^3.0.0\",\n    \"postcss-preset-env\": \"^6.7.0\",\n    \"sass-loader\": \"^8.0.0\",\n    \"style-loader\": \"^1.0.0\",\n    \"terser-webpack-plugin\": \"^1.4.1\",\n    \"url-loader\": \"^2.1.0\",\n    \"webpack\": \"^4.39.3\",\n    \"webpack-cli\": \"^3.3.7\",\n    \"webpack-dev-server\": \"^3.8.0\",\n    \"webpack-merge\": \"^4.2.2\"\n  },\n  \"dependencies\": {\n    \"@babel/runtime\": \"^7.7.6\",\n    \"@esteemapp/esteem-render-helpers\": \"^1.2.6\",\n    \"steem\": \"^0.7.10\",\n    \"steem-content-renderer\": \"^2.1.1\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"steem-utils\",\n  \"version\": \"0.0.1\",\n  \"description\": \"Swiss army knife of helper functions for Steem\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js\",\n    \"build\": \"cross-env NODE_ENV=production webpack --config config/webpack.prod.js\",\n    \"docs\": \"./node_modules/.bin/esdoc\"\n  },\n  \"keywords\": [\n    \"steem\",\n    \"steem utils\"\n  ],\n  \"author\": \"Dzivenu <makafuigdzivenu@gmail.com>\",\n  \"license\": \"MIT\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.5.5\",\n    \"@babel/plugin-proposal-class-properties\": \"^7.5.5\",\n    \"@babel/plugin-transform-runtime\": \"^7.7.6\",\n    \"@babel/preset-env\": \"^7.5.5\",\n    \"babel-eslint\": \"^10.0.3\",\n    \"babel-loader\": \"^8.0.6\",\n    \"clean-webpack-plugin\": \"^3.0.0\",\n    \"copy-webpack-plugin\": \"^5.0.4\",\n    \"cross-env\": \"^5.2.1\",\n    \"css-loader\": \"^3.2.0\",\n    \"cssnano\": \"^4.1.10\",\n    \"dsteem\": \"^0.11.3\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-brand-plugin\": \"^1.0.1\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"esdoc-undocumented-identifier-plugin\": \"^1.0.0\",\n    \"esdoc-unexported-identifier-plugin\": \"^1.0.0\",\n    \"eslint\": \"^6.2.2\",\n    \"eslint-config-standard\": \"^14.1.0\",\n    \"eslint-friendly-formatter\": \"^4.0.1\",\n    \"eslint-loader\": \"^3.0.0\",\n    \"eslint-plugin-import\": \"^2.19.1\",\n    \"eslint-plugin-node\": \"^10.0.0\",\n    \"eslint-plugin-promise\": \"^4.2.1\",\n    \"eslint-plugin-standard\": \"^4.0.1\",\n    \"file-loader\": \"^4.2.0\",\n    \"html-webpack-plugin\": \"^3.2.0\",\n    \"mini-css-extract-plugin\": \"^0.8.0\",\n    \"node-sass\": \"^4.12.0\",\n    \"optimize-css-assets-webpack-plugin\": \"^5.0.3\",\n    \"postcss-loader\": \"^3.0.0\",\n    \"postcss-preset-env\": \"^6.7.0\",\n    \"sass-loader\": \"^8.0.0\",\n    \"style-loader\": \"^1.0.0\",\n    \"terser-webpack-plugin\": \"^1.4.1\",\n    \"url-loader\": \"^2.1.0\",\n    \"webpack\": \"^4.39.3\",\n    \"webpack-cli\": \"^3.3.7\",\n    \"webpack-dev-server\": \"^3.8.0\",\n    \"webpack-merge\": \"^4.2.2\"\n  },\n  \"dependencies\": {\n    \"@babel/runtime\": \"^7.7.6\",\n    \"@esteemapp/esteem-render-helpers\": \"^1.2.6\",\n    \"steem\": \"^0.7.10\",\n    \"steem-content-renderer\": \"^2.1.1\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/steem-sdk/steem-utils\"\n  },\n  \"keywords\": [\n    \"css\",\n    \"generic\"\n  ],\n  \"author\": \"Steem SDK (https://steemsdk.com/)\",\n  \"contributors\": [\n    \"Dzivenu <makafuigdzivenu@gmail.com> (https://dzivenu.com/)\"\n  ],\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/steemsdk/steem-utils/issues\"\n  },\n  \"homepage\": \"https://steemsdk.com/\"\n}",
     "longname": "C:\\Users\\ASUS Ultrabook\\Desktop\\Projects\\Steem Inc\\Projects\\steem sdk\\lib\\js\\utils\\package.json",
     "name": "package.json",
     "static": true,

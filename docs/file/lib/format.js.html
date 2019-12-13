@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<link rel="stylesheet" href="./inject/css/0-esdoc.css"><meta name="description" content="Swiff-army knife of utilities for Steem data"><meta property="og:type" content="website"><meta property="og:url" content="http://my-library.org"><meta property="og:site_name" content="Steem Utils"><meta property="og:title" content="Steem Utils"><meta property="og:image" content="http://my-library.org/logo.png"><meta property="og:description" content="Swiff-army knife of utilities for Steem data"><meta property="og:author" content="https://twitter.com/foo"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Steem Utils"><meta property="twitter:description" content="Swiff-army knife of utilities for Steem data"><meta property="twitter:image" content="http://my-library.org/logo.png"></head>
+<link rel="stylesheet" href="./inject/css/0-esdoc.css"><meta name="description" content="Swiss-army knife of utilities for Steem data"><meta property="og:type" content="website"><meta property="og:url" content="https://steemsdk.com"><meta property="og:site_name" content="Steem Utils"><meta property="og:title" content="Steem Utils"><meta property="og:image" content="https://steemsdk.com/logo.png"><meta property="og:description" content="Swiss-army knife of utilities for Steem data"><meta property="og:author" content="https://steemsdk.com"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Steem Utils"><meta property="twitter:description" content="Swiss-army knife of utilities for Steem data"><meta property="twitter:image" content="https://steemsdk.com/logo.png"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -24,7 +24,7 @@
   </span>
     <ul class="search-result"></ul>
   </div>
-<a style="position:relative; top:3px;" href="https://github.com/foo/bar"><img width="20px" src="./image/github.png"></a></header>
+<a style="position:relative; top:3px;" href="https://github.com/steem-sdk/steem-utils"><img width="20px" src="./image/github.png"></a></header>
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
@@ -48,7 +48,10 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">lib/format.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
+import { voterCount } from &quot;./constants&quot;
+
+/**
  * @ignore
 */
 function log10 (str) {
@@ -78,13 +81,13 @@ const formatVotes = (raw = [], count = voterCount, downvoted = false) =&gt; {
   if (!raw.length) return { votes: raw, len: 0 }
 
   // remove 0 percent votes, which means user removed vote
-  let activeVotes = raw.filter(({ percent }) =&gt; Math.sign(percent) !== 0)
+  const activeVotes = raw.filter(({ percent }) =&gt; Math.sign(percent) !== 0)
 
   // get count
-  let len = activeVotes.length
+  const len = activeVotes.length
 
   // now sort by vote weight
-  let sortedVotes = activeVotes.sort((a, b) =&gt; Math.abs(parseInt(a.rshares)) &gt; Math.abs(parseInt(b.rshares)) ? -1 : 1)
+  const sortedVotes = activeVotes.sort((a, b) =&gt; Math.abs(parseInt(a.rshares)) &gt; Math.abs(parseInt(b.rshares)) ? -1 : 1)
 
   // return only names with vote type: upvote/downvote
   let votes = sortedVotes.map(({ voter, percent }) =&gt; Math.sign(percent) &gt; 0 ? `+ ${voter}` : `- ${voter}`)
