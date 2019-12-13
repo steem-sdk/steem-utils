@@ -1,0 +1,1194 @@
+[
+  {
+    "__docId__": 1,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Infinity",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~NaN",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~undefined",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~null",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Object",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~object",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Function",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~function",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Boolean",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 10,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~boolean",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Symbol",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Error",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~EvalError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~InternalError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 15,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~RangeError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 16,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~ReferenceError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 17,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~SyntaxError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 18,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~TypeError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~URIError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Number",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~number",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Date",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~String",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~string",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~RegExp",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Int8Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Uint8Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Uint8ClampedArray",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Int16Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Uint16Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Int32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Uint32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Float32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Float64Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Map",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Set",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~WeakMap",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~WeakSet",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~ArrayBuffer",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~DataView",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~JSON",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Promise",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Generator",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~GeneratorFunction",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Reflect",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Proxy",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "file",
+    "name": "lib/constants.js",
+    "content": "/**\r\n * @ignore\r\n*/\r\nexport const rendererDefaults = (config = {}) => {\r\n  if (!config.imageProxyFn) config.imageProxyFn = (url) => url\r\n  if (!config.usertagUrlFn) config.usertagUrlFn = (account) => \"/@\" + account\r\n  if (!config.hashtagUrlFn) config.hashtagUrlFn = (hashtag) => \"/issue/\" + hashtag\r\n  if (!config.isLinkSafeFn) config.isLinkSafeFn = (url) => true\r\n\r\n  return {\r\n    baseUrl: config.baseUrl || \"https://steem.online/\",\r\n    breaks: config.breaks || true,\r\n    skipSanitization: config.skipSanitization || false,\r\n    allowInsecureScriptTags: config.allowInsecureScriptTags || false,\r\n    addNofollowToLinks: config.addNofollowToLinks || true,\r\n    doNotShowImages: config.doNotShowImages || false,\r\n    ipfsPrefix: config.ipfsPrefix || \"\",\r\n    assetsWidth: config.assetsWidth || 640,\r\n    assetsHeight: config.assetsHeight || 480,\r\n    imageProxyFn: config.imageProxyFn,\r\n    usertagUrlFn: config.usertagUrlFn,\r\n    hashtagUrlFn: config.hashtagUrlFn,\r\n    isLinkSafeFn: config.isLinkSafeFn\r\n  }\r\n}\r\n",
+    "static": true,
+    "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/constants.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 49,
+    "kind": "function",
+    "name": "rendererDefaults",
+    "memberof": "lib/constants.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/constants.js~rendererDefaults",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/constants.js",
+    "importStyle": "{rendererDefaults}",
+    "description": "",
+    "lineNumber": 4,
+    "ignore": true,
+    "params": [
+      {
+        "name": "config",
+        "optional": true,
+        "types": [
+          "{}"
+        ],
+        "defaultRaw": {},
+        "defaultValue": "{}"
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"baseUrl\": *, \"breaks\": *, \"skipSanitization\": *, \"allowInsecureScriptTags\": *, \"addNofollowToLinks\": *, \"doNotShowImages\": *, \"ipfsPrefix\": *, \"assetsWidth\": *, \"assetsHeight\": *, \"imageProxyFn\": *, \"usertagUrlFn\": *, \"hashtagUrlFn\": *, \"isLinkSafeFn\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 50,
+    "kind": "file",
+    "name": "lib/format.js",
+    "content": "/**\r\n * @ignore\r\n*/\r\nfunction log10 (str) {\r\n  const leadingDigits = parseInt(str.substring(0, 4))\r\n  const log = Math.log(leadingDigits) / Math.LN10 + 0.00000001\r\n  const n = str.length - 1\r\n  return n + (log - parseInt(log))\r\n}\r\n\r\nconst formatRep = rep2 => {\r\n  if (rep2 == null) return rep2\r\n  let rep = String(rep2)\r\n  const neg = rep.charAt(0) === \"-\"\r\n  rep = neg ? rep.substring(1) : rep\r\n\r\n  let out = log10(rep)\r\n  if (isNaN(out)) out = 0\r\n  out = Math.max(out - 9, 0) // @ -9, $0.50 earned is approx magnitude 1\r\n  out = (neg ? -1 : 1) * out\r\n  out = out * 9 + 25 // 9 points per magnitude. center at 25\r\n  // base-line 0 to darken and < 0 to auto hide (grep rephide)\r\n  out = parseInt(out)\r\n  return out\r\n}\r\n\r\nconst formatVotes = (raw = [], count = voterCount, downvoted = false) => {\r\n  if (!raw.length) return { votes: raw, len: 0 }\r\n\r\n  // remove 0 percent votes, which means user removed vote\r\n  let activeVotes = raw.filter(({ percent }) => Math.sign(percent) !== 0)\r\n\r\n  // get count\r\n  let len = activeVotes.length\r\n\r\n  // now sort by vote weight\r\n  let sortedVotes = activeVotes.sort((a, b) => Math.abs(parseInt(a.rshares)) > Math.abs(parseInt(b.rshares)) ? -1 : 1)\r\n\r\n  // return only names with vote type: upvote/downvote\r\n  let votes = sortedVotes.map(({ voter, percent }) => Math.sign(percent) > 0 ? `+ ${voter}` : `- ${voter}`)\r\n\r\n  // trim according to length\r\n  if (count < len) {\r\n    votes = votes.slice(0, count)\r\n    votes.push(`...and ${len - count} others`)\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  } else {\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  }\r\n}\r\n\r\nconst formatPayout = (post, fix = 0) => {\r\n  const pendingPayout = parseFloat(post.pending_payout_value)\r\n  const totalPayout = parseFloat(post.total_payout_value)\r\n  const curatorPayout = parseFloat(post.curator_payout_value)\r\n  return +(totalPayout + pendingPayout + curatorPayout).toFixed(fix)\r\n}\r\n\r\nconst format = { formatRep, formatPayout, formatVotes }\r\n\r\nexport {\r\n  format as default, formatRep, formatPayout, formatVotes\r\n}\r\n\r\n",
+    "static": true,
+    "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/format.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 51,
+    "kind": "function",
+    "name": "log10",
+    "memberof": "lib/format.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/format.js~log10",
+    "access": "public",
+    "export": false,
+    "importPath": "steem-utils/lib/format.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 4,
+    "ignore": true,
+    "params": [
+      {
+        "name": "str",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "variable",
+    "name": "format",
+    "memberof": "lib/format.js",
+    "static": true,
+    "longname": "lib/format.js~format",
+    "access": "public",
+    "export": false,
+    "importPath": "steem-utils/lib/format.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 61,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"formatRep\": *, \"formatPayout\": *, \"formatVotes\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 53,
+    "kind": "function",
+    "name": "formatRep",
+    "memberof": "lib/format.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/format.js~formatRep",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/format.js",
+    "importStyle": "{formatRep}",
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "params": [
+      {
+        "name": "rep2",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 54,
+    "kind": "function",
+    "name": "formatPayout",
+    "memberof": "lib/format.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/format.js~formatPayout",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/format.js",
+    "importStyle": "{formatPayout}",
+    "description": null,
+    "lineNumber": 54,
+    "undocument": true,
+    "params": [
+      {
+        "name": "post",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "fix",
+        "optional": true,
+        "types": [
+          "number"
+        ],
+        "defaultRaw": 0,
+        "defaultValue": "0"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "function",
+    "name": "formatVotes",
+    "memberof": "lib/format.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/format.js~formatVotes",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/format.js",
+    "importStyle": "{formatVotes}",
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "params": [
+      {
+        "name": "raw",
+        "optional": true,
+        "types": [
+          "*[]"
+        ],
+        "defaultRaw": [],
+        "defaultValue": "[]"
+      },
+      {
+        "name": "count",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": "voterCount",
+        "defaultValue": "voterCount"
+      },
+      {
+        "name": "downvoted",
+        "optional": true,
+        "types": [
+          "boolean"
+        ],
+        "defaultRaw": false,
+        "defaultValue": "false"
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"votes\": *, \"len\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 56,
+    "kind": "file",
+    "name": "lib/helpers.js",
+    "content": "/**\r\n * @ignore\r\n*/\r\nexport const argType = arg => {\r\n  if (Array.isArray(arg)) {\r\n    return \"array\"\r\n  } else if (Object.prototype.toString.call(arg) === \"[object Object]\") {\r\n    return \"object\"\r\n  } else if (typeof arg.valueOf() === \"string\") {\r\n    return \"string\"\r\n  } else if (typeof arg.valueOf() === \"number\") {\r\n    return \"number\"\r\n  } else if (typeof arg.valueOf() === \"boolean\") {\r\n    return \"boolean\"\r\n  }\r\n}\r\n\r\n/**\r\n * @ignore\r\n*/\r\nexport const retrieveVotes = votes => {\r\n  if (!Array.isArray(votes) && !Object.prototype.toString.call(votes) === \"[object Object]\") {\r\n    throw new Error(\"Invalid parameter\")\r\n  } else if (Object.prototype.toString.call(votes) === \"[object Object]\") {\r\n    votes = votes.active_votes\r\n    if (!Array.isArray(votes)) {\r\n      throw new Error(\"Invalid parameter\")\r\n    }\r\n  }\r\n  return votes\r\n}\r\n",
+    "static": true,
+    "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/helpers.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 57,
+    "kind": "function",
+    "name": "argType",
+    "memberof": "lib/helpers.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/helpers.js~argType",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/helpers.js",
+    "importStyle": "{argType}",
+    "description": "",
+    "lineNumber": 4,
+    "ignore": true,
+    "params": [
+      {
+        "name": "arg",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "function",
+    "name": "retrieveVotes",
+    "memberof": "lib/helpers.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/helpers.js~retrieveVotes",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/helpers.js",
+    "importStyle": "{retrieveVotes}",
+    "description": "",
+    "lineNumber": 21,
+    "ignore": true,
+    "params": [
+      {
+        "name": "votes",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 59,
+    "kind": "file",
+    "name": "lib/index.js",
+    "content": "\r\nimport parse from \"./parse\"\r\nimport validate from \"./validate\"\r\nimport format from \"./format\"\r\nimport stats from \"./stats\"\r\nimport sort from \"./sort\"\r\n\r\nconst lib = { stats, sort, parse, format }\r\n\r\nexport {\r\n  lib as default, stats, sort, parse, format\r\n}\r\n",
+    "static": true,
+    "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/index.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 60,
+    "kind": "variable",
+    "name": "lib",
+    "memberof": "lib/index.js",
+    "static": true,
+    "longname": "lib/index.js~lib",
+    "access": "public",
+    "export": false,
+    "importPath": "steem-utils/lib/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"stats\": *, \"sort\": *, \"parse\": *, \"format\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "file",
+    "name": "lib/parse.js",
+    "content": "import { DefaultRenderer } from \"steem-content-renderer\"\r\nimport { rendererDefaults } from \"./constants\"\r\nimport { argType } from \"./helpers\"\r\n\r\nconst parsePost = (content, options) => {\r\n  const config = rendererDefaults(options)\r\n  const renderer = new DefaultRenderer(config)\r\n\r\n  const type = argType(content)\r\n\r\n  if (type === \"string\") {\r\n    return renderer.render(content)\r\n  } else if (type === \"object\") {\r\n    if (content.body) return renderer.render(content.body)\r\n  }\r\n  return false\r\n}\r\n\r\nconst parsePosts = async (content, options) => {\r\n  const config = rendererDefaults(options)\r\n  const renderer = new DefaultRenderer(config)\r\n\r\n  const promises = content.map(async post => {\r\n    const type = argType(post)\r\n\r\n    if (type === \"string\") {\r\n      return renderer.render(post)\r\n    } else if (type === \"object\") {\r\n      return renderer.render(content.body)\r\n    }\r\n  })\r\n\r\n  const posts = await Promise.all(promises)\r\n  return posts\r\n}\r\n\r\nconst parse = { parsePost, parsePosts }\r\n\r\nexport {\r\n  parse as default, parsePost, parsePosts\r\n}\r\n",
+    "static": true,
+    "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/parse.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 62,
+    "kind": "variable",
+    "name": "parse",
+    "memberof": "lib/parse.js",
+    "static": true,
+    "longname": "lib/parse.js~parse",
+    "access": "public",
+    "export": false,
+    "importPath": "steem-utils/lib/parse.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 37,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"parsePost\": *, \"parsePosts\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 63,
+    "kind": "function",
+    "name": "parsePost",
+    "memberof": "lib/parse.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/parse.js~parsePost",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/parse.js",
+    "importStyle": "{parsePost}",
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "params": [
+      {
+        "name": "content",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "options",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 64,
+    "kind": "function",
+    "name": "parsePosts",
+    "memberof": "lib/parse.js",
+    "generator": false,
+    "async": true,
+    "static": true,
+    "longname": "lib/parse.js~parsePosts",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/parse.js",
+    "importStyle": "{parsePosts}",
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "params": [
+      {
+        "name": "content",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "options",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 65,
+    "kind": "file",
+    "name": "lib/sort.js",
+    "content": "\r\nimport { retrieveVotes } from \"./helpers\"\r\n\r\nconst sortVotes = votes => {\r\n  votes = retrieveVotes(votes)\r\n\r\n  const upVotes = votes.filter((vote) => vote.percent > 0)\r\n  const downVotes = votes.filter((vote) => vote.percent < 0)\r\n  const removedVotes = votes.filter((vote) => vote.percent === 0)\r\n\r\n  return {\r\n    upVotes, downVotes, removedVotes\r\n  }\r\n}\r\n\r\nconst sort = { sortVotes }\r\n\r\nexport {\r\n  sort as default, sortVotes\r\n}\r\n",
+    "static": true,
+    "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/sort.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 66,
+    "kind": "variable",
+    "name": "sort",
+    "memberof": "lib/sort.js",
+    "static": true,
+    "longname": "lib/sort.js~sort",
+    "access": "public",
+    "export": false,
+    "importPath": "steem-utils/lib/sort.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"sortVotes\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 67,
+    "kind": "function",
+    "name": "sortVotes",
+    "memberof": "lib/sort.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/sort.js~sortVotes",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/sort.js",
+    "importStyle": "{sortVotes}",
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "params": [
+      {
+        "name": "votes",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"upVotes\": *, \"downVotes\": *, \"removedVotes\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 68,
+    "kind": "file",
+    "name": "lib/stats.js",
+    "content": "\r\nimport { retrieveVotes } from \"./helpers\"\r\n\r\nconst voteStats = votes => {\r\n  votes = retrieveVotes(votes)\r\n\r\n  const total = votes.length\r\n  const upVotes = votes.filter((vote) => vote.percent > 0).length\r\n  const downVotes = votes.filter((vote) => vote.percent < 0).length\r\n  const removedVotes = votes.filter((vote) => vote.percent === 0).length\r\n\r\n  return {\r\n    total, upVotes, downVotes, removedVotes\r\n  }\r\n}\r\n\r\nconst stats = { voteStats }\r\n\r\nexport {\r\n  stats as default, voteStats\r\n}\r\n",
+    "static": true,
+    "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/stats.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 69,
+    "kind": "variable",
+    "name": "stats",
+    "memberof": "lib/stats.js",
+    "static": true,
+    "longname": "lib/stats.js~stats",
+    "access": "public",
+    "export": false,
+    "importPath": "steem-utils/lib/stats.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"voteStats\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 70,
+    "kind": "function",
+    "name": "voteStats",
+    "memberof": "lib/stats.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/stats.js~voteStats",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/stats.js",
+    "importStyle": "{voteStats}",
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "params": [
+      {
+        "name": "votes",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"total\": *, \"upVotes\": *, \"downVotes\": *, \"removedVotes\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 71,
+    "kind": "file",
+    "name": "lib/validate.js",
+    "content": "\r\n/**\r\n* This validates account name\r\n*/\r\nconst validateAccount = value => {\r\n  let i, label, len\r\n\r\n  if (!value) {\r\n    return \"Account name should not be empty\"\r\n  }\r\n\r\n  const length = value.length\r\n\r\n  if (length < 3) {\r\n    return \"Account name should be at least 3 characters long\"\r\n  }\r\n  if (length > 16) {\r\n    return \"Account name should be not be more than 16 characters\"\r\n  }\r\n\r\n  const ref = value.split(\".\")\r\n\r\n  for (i = 0, len = ref.length; i < len; i++) {\r\n    label = ref[i]\r\n    if (!/^[a-z]/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!/^[a-z0-9-]*$/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (/--/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!/[a-z0-9]$/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!(label.length >= 3)) {\r\n      return \"Invalid account\"\r\n    }\r\n  }\r\n  return true\r\n}\r\n\r\nconst validate = { validateAccount }\r\n\r\nexport {\r\n  validate as default, validateAccount\r\n}\r\n",
+    "static": true,
+    "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/Steem Inc/Projects/steem sdk/lib/js/utils/src/lib/validate.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 72,
+    "kind": "variable",
+    "name": "validate",
+    "memberof": "lib/validate.js",
+    "static": true,
+    "longname": "lib/validate.js~validate",
+    "access": "public",
+    "export": false,
+    "importPath": "steem-utils/lib/validate.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 44,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{\"validateAccount\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 73,
+    "kind": "function",
+    "name": "validateAccount",
+    "memberof": "lib/validate.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/validate.js~validateAccount",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/validate.js",
+    "importStyle": "{validateAccount}",
+    "description": "This validates account name",
+    "lineNumber": 5,
+    "params": [
+      {
+        "name": "value",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "kind": "index",
+    "content": "# Steem utils\n\n// swiss army knife for steem ops",
+    "longname": "C:\\Users\\ASUS Ultrabook\\Desktop\\Projects\\Steem Inc\\Projects\\steem sdk\\lib\\js\\utils\\README.md",
+    "name": "./README.md",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "packageJSON",
+    "content": "{\n  \"name\": \"steem-utils\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Steem Utils\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js\",\n    \"build\": \"cross-env NODE_ENV=production webpack --config config/webpack.prod.js\",\n    \"docs\": \"./node_modules/.bin/esdoc\"\n  },\n  \"keywords\": [\n    \"webpack\",\n    \"webpack 4\",\n    \"webpack boilerplate\",\n    \"boilerplate\",\n    \"hmr\"\n  ],\n  \"author\": \"Tania Rascia <tania@taniarascia.com>\",\n  \"license\": \"MIT\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.5.5\",\n    \"@babel/plugin-proposal-class-properties\": \"^7.5.5\",\n    \"@babel/plugin-transform-runtime\": \"^7.7.6\",\n    \"@babel/preset-env\": \"^7.5.5\",\n    \"babel-eslint\": \"^10.0.3\",\n    \"babel-loader\": \"^8.0.6\",\n    \"clean-webpack-plugin\": \"^3.0.0\",\n    \"copy-webpack-plugin\": \"^5.0.4\",\n    \"cross-env\": \"^5.2.1\",\n    \"css-loader\": \"^3.2.0\",\n    \"cssnano\": \"^4.1.10\",\n    \"dsteem\": \"^0.11.3\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-brand-plugin\": \"^1.0.1\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"esdoc-undocumented-identifier-plugin\": \"^1.0.0\",\n    \"esdoc-unexported-identifier-plugin\": \"^1.0.0\",\n    \"eslint\": \"^6.2.2\",\n    \"eslint-config-standard\": \"^14.1.0\",\n    \"eslint-friendly-formatter\": \"^4.0.1\",\n    \"eslint-loader\": \"^3.0.0\",\n    \"eslint-plugin-import\": \"^2.19.1\",\n    \"eslint-plugin-node\": \"^10.0.0\",\n    \"eslint-plugin-promise\": \"^4.2.1\",\n    \"eslint-plugin-standard\": \"^4.0.1\",\n    \"file-loader\": \"^4.2.0\",\n    \"html-webpack-plugin\": \"^3.2.0\",\n    \"mini-css-extract-plugin\": \"^0.8.0\",\n    \"node-sass\": \"^4.12.0\",\n    \"optimize-css-assets-webpack-plugin\": \"^5.0.3\",\n    \"postcss-loader\": \"^3.0.0\",\n    \"postcss-preset-env\": \"^6.7.0\",\n    \"sass-loader\": \"^8.0.0\",\n    \"style-loader\": \"^1.0.0\",\n    \"terser-webpack-plugin\": \"^1.4.1\",\n    \"url-loader\": \"^2.1.0\",\n    \"webpack\": \"^4.39.3\",\n    \"webpack-cli\": \"^3.3.7\",\n    \"webpack-dev-server\": \"^3.8.0\",\n    \"webpack-merge\": \"^4.2.2\"\n  },\n  \"dependencies\": {\n    \"@babel/runtime\": \"^7.7.6\",\n    \"@esteemapp/esteem-render-helpers\": \"^1.2.6\",\n    \"steem\": \"^0.7.10\",\n    \"steem-content-renderer\": \"^2.1.1\"\n  }\n}\n",
+    "longname": "C:\\Users\\ASUS Ultrabook\\Desktop\\Projects\\Steem Inc\\Projects\\steem sdk\\lib\\js\\utils\\package.json",
+    "name": "package.json",
+    "static": true,
+    "access": "public"
+  }
+]

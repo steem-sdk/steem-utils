@@ -1,0 +1,23 @@
+{
+  "source": "./src/lib",
+  "destination": "./docs",
+  "package.json": "./package.json",
+  "plugins": [
+    {"name": "esdoc-standard-plugin"},
+    {"name": "esdoc-unexported-identifier-plugin", "option": {"enable": true}},
+    {"name": "esdoc-undocumented-identifier-plugin", "option": {"enable": true}},
+    {"name": "esdoc-inject-style-plugin", "option": {"enable": true, "styles": ["./src/styles/esdoc.css"]}},
+    {
+      "name": "esdoc-brand-plugin",
+      "option": {
+        "logo": "./src/images/steem-sdk-logo.png",
+        "title": "Steem Utils",
+        "description": "Swiff-army knife of utilities for Steem data",
+        "repository": "https://github.com/foo/bar",
+        "site": "http://my-library.org",
+        "author": "https://twitter.com/foo",
+        "image": "http://my-library.org/logo.png"
+      }
+    }
+  ]
+}
