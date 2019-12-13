@@ -1,15 +1,15 @@
 {
   "name": "steem-utils",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "Swiss army knife of helper functions for Steem",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
     "docs": "./node_modules/.bin/esdoc",
-    "publish": "git push",
+    "publish": "npm version minor --force -m \"version %s\"",
     "preversion": "npm run docs",
-    "version": "git add -A && git commit -m 'update docs'",
+    "version": "git add -A && git commit -m \"update docs\"",
     "postversion": "npm publish && git push"
   },
   "keywords": [
