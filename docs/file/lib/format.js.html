@@ -29,14 +29,22 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatPayout">formatPayout</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatImage">formatImage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatPayout">formatPayout</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatRep">formatRep</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVests">formatVests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-account">account</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-meta">meta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePost">parsePost</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePosts">parsePosts</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sortVotes">sortVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-voteStats">voteStats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validateAccount">validateAccount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_100_PERCENT">STEEMIT_100_PERCENT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS">STEEMIT_VOTE_REGENERATION_SECONDS</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-lib">lib</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parse">parse</a></span></span></li>
@@ -49,7 +57,12 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">lib/format.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
+import { catchPostImage } from &quot;@esteemapp/esteem-render-helpers&quot;
 import { voterCount } from &quot;./constants&quot;
+import { argType } from &quot;./helpers&quot;
+
+const STEEMIT_100_PERCENT = 10000
+const STEEMIT_VOTE_REGENERATION_SECONDS = (5 * 60 * 60 * 24)
 
 /**
  * @ignore
@@ -111,10 +124,64 @@ const formatPayout = (post, fix = 0) =&gt; {
   return +(totalPayout + pendingPayout + curatorPayout).toFixed(fix)
 }
 
-const format = { formatRep, formatPayout, formatVotes }
+function formatVotingPower (account) {
+  const maxMana = formatVests(account) * 1000000
+
+  const lastMana = parseInt(account.voting_manabar.current_mana)
+  const lastUpdateTime = account.voting_manabar.last_update_time
+  const lastUpdate = new Date(lastUpdateTime * 1000)
+  const elapsed = (new Date().getTime() - lastUpdate.getTime()) / 1000
+
+  let currentMana = lastMana + elapsed * (maxMana / 432000)
+
+  if (currentMana &gt; maxMana) {
+    currentMana = maxMana
+  }
+
+  let currentManaPct = 0
+
+  if (maxMana &gt; 0) {
+    currentManaPct = (currentMana / maxMana) * 100
+  }
+
+  return Math.round(currentManaPct)
+}
+
+function formatVests (account) {
+  return (parseFloat(account.vesting_shares) + parseFloat(account.received_vesting_shares)) -
+   (parseFloat(account.delegated_vesting_shares) + parseFloat(account.vesting_withdraw_rate))
+}
+
+function formatImage (data) {
+  const jsonMetadata = JSON.parse(data.json_metadata || &quot;{}&quot;)
+
+  const image = jsonMetadata.image || jsonMetadata.images
+
+  if (image) {
+    const type = argType(image)
+    if (type === &quot;string&quot;) {
+      return image
+    } else if (type === &quot;array&quot;) {
+      return image[0]
+    } else if (type === &quot;object&quot;) {
+      return image.url || image.featured || image.featured_image || image.featuredImage
+    } else {
+      return null
+    }
+  } else {
+    const img = jsonMetadata.img || jsonMetadata.featured_image || jsonMetadata.featuredImage
+    if (img &amp;&amp; argType(img) === &quot;string&quot;) {
+      return img
+    } else {
+      return catchPostImage(data)
+    }
+  }
+}
+
+const format = { formatRep, formatPayout, formatVotes, formatImage, formatVotingPower, formatVests }
 
 export {
-  format as default, formatRep, formatPayout, formatVotes
+  format as default, formatRep, formatPayout, formatVotes, formatImage, formatVotingPower, formatVests
 }
 
 </code></pre>

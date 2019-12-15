@@ -1,9 +1,33 @@
 window.esdocSearchIndex = [
   [
+    "steem-utils/lib/format.js~steemit_100_percent",
+    "variable/index.html#static-variable-STEEMIT_100_PERCENT",
+    "<span>STEEMIT_100_PERCENT</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
+    "variable"
+  ],
+  [
+    "steem-utils/lib/format.js~steemit_vote_regeneration_seconds",
+    "variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS",
+    "<span>STEEMIT_VOTE_REGENERATION_SECONDS</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
+    "variable"
+  ],
+  [
+    "steem-utils/lib/meta.js~account",
+    "function/index.html#static-function-account",
+    "<span>account</span> <span class=\"search-result-import-path\">steem-utils/lib/meta.js</span>",
+    "function"
+  ],
+  [
     "steem-utils/lib/format.js~format",
     "variable/index.html#static-variable-format",
     "<span>format</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
     "variable"
+  ],
+  [
+    "steem-utils/lib/format.js~formatimage",
+    "function/index.html#static-function-formatImage",
+    "<span>formatImage</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
+    "function"
   ],
   [
     "steem-utils/lib/format.js~formatpayout",
@@ -18,9 +42,21 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "steem-utils/lib/format.js~formatvests",
+    "function/index.html#static-function-formatVests",
+    "<span>formatVests</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
+    "function"
+  ],
+  [
     "steem-utils/lib/format.js~formatvotes",
     "function/index.html#static-function-formatVotes",
     "<span>formatVotes</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
+    "function"
+  ],
+  [
+    "steem-utils/lib/format.js~formatvotingpower",
+    "function/index.html#static-function-formatVotingPower",
+    "<span>formatVotingPower</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
     "function"
   ],
   [
@@ -28,6 +64,12 @@ window.esdocSearchIndex = [
     "variable/index.html#static-variable-lib",
     "<span>lib</span> <span class=\"search-result-import-path\">steem-utils/lib/index.js</span>",
     "variable"
+  ],
+  [
+    "steem-utils/lib/meta.js~meta",
+    "function/index.html#static-function-meta",
+    "<span>meta</span> <span class=\"search-result-import-path\">steem-utils/lib/meta.js</span>",
+    "function"
   ],
   [
     "steem-utils/lib/parse.js~parse",
@@ -45,6 +87,12 @@ window.esdocSearchIndex = [
     "steem-utils/lib/parse.js~parseposts",
     "function/index.html#static-function-parsePosts",
     "<span>parsePosts</span> <span class=\"search-result-import-path\">steem-utils/lib/parse.js</span>",
+    "function"
+  ],
+  [
+    "steem-utils/lib/meta.js~post",
+    "function/index.html#static-function-post",
+    "<span>post</span> <span class=\"search-result-import-path\">steem-utils/lib/meta.js</span>",
     "function"
   ],
   [
@@ -387,6 +435,12 @@ window.esdocSearchIndex = [
     "lib/index.js",
     "file/lib/index.js.html",
     "lib/index.js",
+    "file"
+  ],
+  [
+    "lib/meta.js",
+    "file/lib/meta.js.html",
+    "lib/meta.js",
     "file"
   ],
   [

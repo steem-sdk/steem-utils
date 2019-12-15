@@ -29,14 +29,22 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatPayout">formatPayout</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatImage">formatImage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatPayout">formatPayout</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatRep">formatRep</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVests">formatVests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-account">account</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-meta">meta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePost">parsePost</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePosts">parsePosts</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sortVotes">sortVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-voteStats">voteStats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validateAccount">validateAccount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_100_PERCENT">STEEMIT_100_PERCENT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS">STEEMIT_VOTE_REGENERATION_SECONDS</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-lib">lib</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parse">parse</a></span></span></li>
@@ -47,7 +55,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1>Source <img data-ice="coverageBadge" src="./badge.svg"><span data-ice="totalCoverageCount" class="total-coverage-count">6/19</span></h1>
+<div class="content" data-ice="content"><h1>Source <img data-ice="coverageBadge" src="./badge.svg"><span data-ice="totalCoverageCount" class="total-coverage-count">7/28</span></h1>
 
 <table class="files-summary" data-ice="files" data-use-coverage="true">
   <thead>
@@ -65,21 +73,26 @@
   <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/lib/constants.js.html">lib/constants.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
-      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">2/2</span></td>
-      <td style="display: none;" data-ice="size">1069 byte</td>
-      <td style="display: none;" data-ice="lines">30</td>
-      <td style="display: none;" data-ice="updated">2019-12-05 20:23:52 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">3/3</span></td>
+      <td style="display: none;" data-ice="size">1125 byte</td>
+      <td style="display: none;" data-ice="lines">35</td>
+      <td style="display: none;" data-ice="updated">2019-12-07 17:12:12 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/lib/format.js.html#errorLines=14,30,57,64">lib/format.js</a></span></td>
-      <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-format">format</a></span>
+      <td data-ice="filePath"><span><a href="file/lib/format.js.html#errorLines=123,19,35,6,62,69,7,92,97">lib/format.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-STEEMIT_100_PERCENT">STEEMIT_100_PERCENT</a></span>
+<span><a href="variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS">STEEMIT_VOTE_REGENERATION_SECONDS</a></span>
+<span><a href="variable/index.html#static-variable-format">format</a></span>
+<span><a href="function/index.html#static-function-formatImage">formatImage</a></span>
 <span><a href="function/index.html#static-function-formatPayout">formatPayout</a></span>
 <span><a href="function/index.html#static-function-formatRep">formatRep</a></span>
-<span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></td>
-      <td class="coverage"><span data-ice="coverage">20 %</span><span data-ice="coverageCount" class="coverage-count">1/5</span></td>
-      <td style="display: none;" data-ice="size">2163 byte</td>
-      <td style="display: none;" data-ice="lines">69</td>
-      <td style="display: none;" data-ice="updated">2019-12-05 20:24:19 (UTC)</td>
+<span><a href="function/index.html#static-function-formatVests">formatVests</a></span>
+<span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span>
+<span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></td>
+      <td class="coverage"><span data-ice="coverage">10 %</span><span data-ice="coverageCount" class="coverage-count">1/10</span></td>
+      <td style="display: none;" data-ice="size">4034 byte</td>
+      <td style="display: none;" data-ice="lines">128</td>
+      <td style="display: none;" data-ice="updated">2019-12-01 07:37:18 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/lib/helpers.js.html">lib/helpers.js</a></span></td>
@@ -90,12 +103,22 @@
       <td style="display: none;" data-ice="updated">2019-12-04 11:36:40 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/lib/index.js.html#errorLines=8">lib/index.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/lib/index.js.html#errorLines=9">lib/index.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-lib">lib</a></span></td>
       <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/1</span></td>
-      <td style="display: none;" data-ice="size">260 byte</td>
-      <td style="display: none;" data-ice="lines">12</td>
-      <td style="display: none;" data-ice="updated">2019-12-04 11:10:46 (UTC)</td>
+      <td style="display: none;" data-ice="size">299 byte</td>
+      <td style="display: none;" data-ice="lines">13</td>
+      <td style="display: none;" data-ice="updated">2019-12-07 15:20:08 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/lib/meta.js.html#errorLines=45,7,9">lib/meta.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="function/index.html#static-function-account">account</a></span>
+<span><a href="function/index.html#static-function-meta">meta</a></span>
+<span><a href="function/index.html#static-function-post">post</a></span></td>
+      <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/3</span></td>
+      <td style="display: none;" data-ice="size">1776 byte</td>
+      <td style="display: none;" data-ice="lines">61</td>
+      <td style="display: none;" data-ice="updated">2019-12-01 07:45:05 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/lib/parse.js.html#errorLines=19,37,5">lib/parse.js</a></span></td>
