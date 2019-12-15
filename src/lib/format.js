@@ -13,9 +13,9 @@ function log10 (str) {
   return n + (log - parseInt(log))
 }
 
-const formatRep = rep2 => {
-  if (rep2 == null) return rep2
-  let rep = String(rep2)
+const formatRep = reputation => {
+  if (reputation == null) return reputation
+  let rep = String(reputation)
   const neg = rep.charAt(0) === "-"
   rep = neg ? rep.substring(1) : rep
 
