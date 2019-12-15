@@ -14,4 +14,4 @@ Swiss army knife for steem ops
 
 ## Documentation
 
-[utils-js.steemsdk.com](utils-js.steemsdk.com)
+[https://utils-js.steemsdk.com](https://utils-js.steemsdk.com)
