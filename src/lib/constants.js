@@ -28,3 +28,8 @@ export const rendererDefaults = (config = {}) => {
  * @ignore
 */
 export const voterCount = 10
+
+/**
+ * @ignore
+*/
+export const summaryCount = 300

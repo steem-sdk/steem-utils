@@ -18,6 +18,7 @@ module.exports = merge(common, {
     parse: paths.src + "/lib/parse",
     stats: paths.src + "/lib/stats",
     validate: paths.src + "/lib/validate",
+    meta: paths.src + "/lib/meta",
     index: paths.src + "/lib/index",
   },
   output: {
