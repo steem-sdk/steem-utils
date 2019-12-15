@@ -16,9 +16,12 @@ async function go () {
 
   //
   const res = await client.database.call("get_content", [author, permlink])
-  console.log(res)
+  console.log(lib.meta(res))
 
-  console.log(lib.stats.votes(res))
+  const [account] = await client.database.getAccounts([author])
+  // console.log(account)
+
+  console.log(lib.meta(account))
 }
 
 window.go = go
