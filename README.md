@@ -1,6 +1,6 @@
 # Steem utils
 
-Swiss army knife for steem ops
+Swiss army knife for Steem ops
 
 ## Installation
 
