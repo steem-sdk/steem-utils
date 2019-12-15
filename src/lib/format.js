@@ -1,5 +1,10 @@
 
+import { catchPostImage } from "@esteemapp/esteem-render-helpers"
 import { voterCount } from "./constants"
+import { argType } from "./helpers"
+
+const STEEMIT_100_PERCENT = 10000
+const STEEMIT_VOTE_REGENERATION_SECONDS = (5 * 60 * 60 * 24)
 
 /**
  * @ignore
@@ -61,9 +66,63 @@ const formatPayout = (post, fix = 0) => {
   return +(totalPayout + pendingPayout + curatorPayout).toFixed(fix)
 }
 
-const format = { formatRep, formatPayout, formatVotes }
+function formatVotingPower (account) {
+  const maxMana = formatVests(account) * 1000000
+
+  const lastMana = parseInt(account.voting_manabar.current_mana)
+  const lastUpdateTime = account.voting_manabar.last_update_time
+  const lastUpdate = new Date(lastUpdateTime * 1000)
+  const elapsed = (new Date().getTime() - lastUpdate.getTime()) / 1000
+
+  let currentMana = lastMana + elapsed * (maxMana / 432000)
+
+  if (currentMana > maxMana) {
+    currentMana = maxMana
+  }
+
+  let currentManaPct = 0
+
+  if (maxMana > 0) {
+    currentManaPct = (currentMana / maxMana) * 100
+  }
+
+  return Math.round(currentManaPct)
+}
+
+function formatVests (account) {
+  return (parseFloat(account.vesting_shares) + parseFloat(account.received_vesting_shares)) -
+   (parseFloat(account.delegated_vesting_shares) + parseFloat(account.vesting_withdraw_rate))
+}
+
+function formatImage (data) {
+  const jsonMetadata = JSON.parse(data.json_metadata || "{}")
+
+  const image = jsonMetadata.image || jsonMetadata.images
+
+  if (image) {
+    const type = argType(image)
+    if (type === "string") {
+      return image
+    } else if (type === "array") {
+      return image[0]
+    } else if (type === "object") {
+      return image.url || image.featured || image.featured_image || image.featuredImage
+    } else {
+      return null
+    }
+  } else {
+    const img = jsonMetadata.img || jsonMetadata.featured_image || jsonMetadata.featuredImage
+    if (img && argType(img) === "string") {
+      return img
+    } else {
+      return catchPostImage(data)
+    }
+  }
+}
+
+const format = { formatRep, formatPayout, formatVotes, formatImage, formatVotingPower, formatVests }
 
 export {
-  format as default, formatRep, formatPayout, formatVotes
+  format as default, formatRep, formatPayout, formatVotes, formatImage, formatVotingPower, formatVests
 }
 
