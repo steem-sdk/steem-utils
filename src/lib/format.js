@@ -3,9 +3,6 @@ import { catchPostImage } from "@esteemapp/esteem-render-helpers"
 import { voterCount } from "./constants"
 import { argType } from "./helpers"
 
-const STEEMIT_100_PERCENT = 10000
-const STEEMIT_VOTE_REGENERATION_SECONDS = (5 * 60 * 60 * 24)
-
 /**
  * @ignore
 */
