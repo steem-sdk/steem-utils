@@ -35,19 +35,17 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVests">formatVests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-account">account</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-accountMeta">accountMeta</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-meta">meta</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-postMeta">postMeta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePost">parsePost</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePosts">parsePosts</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sortVotes">sortVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-voteStats">voteStats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validateAccount">validateAccount</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_100_PERCENT">STEEMIT_100_PERCENT</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS">STEEMIT_VOTE_REGENERATION_SECONDS</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-lib">lib</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parse">parse</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sort">sort</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stats">stats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-validate">validate</a></span></span></li>
@@ -61,9 +59,6 @@ import { catchPostImage } from &quot;@esteemapp/esteem-render-helpers&quot;
 import { voterCount } from &quot;./constants&quot;
 import { argType } from &quot;./helpers&quot;
 
-const STEEMIT_100_PERCENT = 10000
-const STEEMIT_VOTE_REGENERATION_SECONDS = (5 * 60 * 60 * 24)
-
 /**
  * @ignore
 */
@@ -74,9 +69,20 @@ function log10 (str) {
   return n + (log - parseInt(log))
 }
 
-const formatRep = rep2 =&gt; {
-  if (rep2 == null) return rep2
-  let rep = String(rep2)
+/**
+ *  Formats a Steem account&apos;s reputation
+ *  @param {string} reputation Steem reputation value
+ *  @returns {number} Formatted reputation value
+ *
+ *  @example
+ *  let rep = formatRep(accountData.reputation)
+ *  let rep = formatRep(post.author_reputation)
+ *  console.log(accountData.reputation, rep)
+ *  `&quot;23049917997434&quot;, 64`
+ */
+const formatRep = reputation =&gt; {
+  if (reputation == null) return reputation
+  let rep = String(reputation)
   const neg = rep.charAt(0) === &quot;-&quot;
   rep = neg ? rep.substring(1) : rep
 
@@ -90,8 +96,32 @@ const formatRep = rep2 =&gt; {
   return out
 }
 
+/**
+ *  Formats a Steem post&apos;s active votes
+ *  Will sort out removed votes, and order by weight
+ *  Will trim return array to specified or default `count` {@link voterCount}
+ *  @param {(string[]|object)} raw Post&apos;s active_votes,
+ *  @param {string} count The number of returned account names
+ *  @param {string} downvoted ?
+ *  @returns {object} {votes, len}: `votes` is the array of votes, length is length of the votes
+ *
+ *  @example
+ *  let votes = formatVotes(postData.active_votes || postData)
+ *  console.log(votes.votes)
+ *  `
+ *  [&quot;+ therising&quot;, &quot;+ upmewhale&quot;, &quot;+ appreciator&quot;, &quot;+ smartsteem&quot;, &quot;+ rocky1&quot;, &quot;+ buildawhale&quot;,
+ *  &quot;+ promobot&quot;, &quot;+ jerrybanfield&quot;, &quot;+ upmyvote&quot;&quot;+ postpromoter&quot;, &quot;...and 1741 others&quot;]
+ *  `
+ */
 const formatVotes = (raw = [], count = voterCount, downvoted = false) =&gt; {
-  if (!raw.length) return { votes: raw, len: 0 }
+  if (!raw.length &amp;&amp; !raw.active_votes.length) return { votes: raw, len: 0 }
+
+  const type = argType(raw)
+  if (type === &quot;object&quot; &amp;&amp; raw.active_votes) {
+    raw = raw.active_votes
+  } else if (type !== &quot;array&quot;) {
+    return { votes: raw, len: 0 }
+  }
 
   // remove 0 percent votes, which means user removed vote
   const activeVotes = raw.filter(({ percent }) =&gt; Math.sign(percent) !== 0)
@@ -117,14 +147,36 @@ const formatVotes = (raw = [], count = voterCount, downvoted = false) =&gt; {
   }
 }
 
-const formatPayout = (post, fix = 0) =&gt; {
+/**
+ *  Formats a Steem post&apos;s payout, does not discriminate for pending or completed posts. Values are for SBD
+ *  @param {object} post object
+ *  @param {number} fix Number of decimal places to fix it to
+ *  @returns {number} Post earned value in SBD
+ *
+ *  @example
+ *  let payout = formatPayout(postData)
+ */
+const formatPayout = (post, fix = 2) =&gt; {
+  if (argType(post) !== &quot;object&quot;) return false
+
   const pendingPayout = parseFloat(post.pending_payout_value)
   const totalPayout = parseFloat(post.total_payout_value)
   const curatorPayout = parseFloat(post.curator_payout_value)
-  return +(totalPayout + pendingPayout + curatorPayout).toFixed(fix)
+
+  return +((totalPayout + pendingPayout + curatorPayout).toFixed(fix))
 }
 
+/**
+ *  Formats a Steem account&apos;s voting power using the manarbar data
+ *  @param {object} account Steem account data, not account username
+ *  @returns {number} Formatted voting power in percentage
+ *
+ *  @example
+ *  let votingPower = formatVotingPower(accountData)
+ */
 function formatVotingPower (account) {
+  if (argType(account) !== &quot;object&quot;) return false
+
   const maxMana = formatVests(account) * 1000000
 
   const lastMana = parseInt(account.voting_manabar.current_mana)
@@ -147,34 +199,57 @@ function formatVotingPower (account) {
   return Math.round(currentManaPct)
 }
 
+/**
+ *  Formats a Steem account&apos;s vests
+ *  @param {object} account - Steem account&apos;s data, not username
+ *  @returns {number} Formatted account vests value
+ *
+ *  @example
+ *  let vests = formatVests(accountData)
+ */
 function formatVests (account) {
+  if (argType(account) !== &quot;object&quot;) return false
+
   return (parseFloat(account.vesting_shares) + parseFloat(account.received_vesting_shares)) -
    (parseFloat(account.delegated_vesting_shares) + parseFloat(account.vesting_withdraw_rate))
 }
 
+/**
+ *  Extract the first image or potentially featured image for a post
+ *  @param {(string|object)} data Post data object or post body string
+ *  @returns {string} Returns the URL of first image for a post, meant to be used to extract featured images
+ *
+ *  @example
+ *  let post_featured_image_url = formatImage(postData.body || postData)
+ */
 function formatImage (data) {
-  const jsonMetadata = JSON.parse(data.json_metadata || &quot;{}&quot;)
+  const dataType = argType(data)
+  if (dataType !== &quot;object&quot;) {
+    const jsonMetadata = JSON.parse(data.json_metadata || &quot;{}&quot;)
 
-  const image = jsonMetadata.image || jsonMetadata.images
+    const image = jsonMetadata.image || jsonMetadata.images
 
-  if (image) {
-    const type = argType(image)
-    if (type === &quot;string&quot;) {
-      return image
-    } else if (type === &quot;array&quot;) {
-      return image[0]
-    } else if (type === &quot;object&quot;) {
-      return image.url || image.featured || image.featured_image || image.featuredImage
+    if (image) {
+      const type = argType(image)
+      if (type === &quot;string&quot;) {
+        return image
+      } else if (type === &quot;array&quot;) {
+        return image[0]
+      } else if (type === &quot;object&quot;) {
+        return image.url || image.featured || image.featured_image || image.featuredImage
+      } else {
+        return null
+      }
     } else {
-      return null
+      const img = jsonMetadata.img || jsonMetadata.featured_image || jsonMetadata.featuredImage
+      if (img &amp;&amp; argType(img) === &quot;string&quot;) {
+        return img
+      } else {
+        return catchPostImage(data)
+      }
     }
-  } else {
-    const img = jsonMetadata.img || jsonMetadata.featured_image || jsonMetadata.featuredImage
-    if (img &amp;&amp; argType(img) === &quot;string&quot;) {
-      return img
-    } else {
-      return catchPostImage(data)
-    }
+  } else if (dataType === &quot;string&quot;) {
+    return catchPostImage(data)
   }
 }
 

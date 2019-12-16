@@ -1,15 +1,29 @@
 
 /**
-* This validates account name
-*/
-const validateAccount = value => {
+ *  Validates a Steem account username
+ *  @param {string} username Steem account username
+ *  @returns {(string|boolean)} Returns error message if account is invalid or `true` if valid
+ *
+ *  @example
+ *  let valid = validateAccount('la$tkiller')
+ *  console.log(valid)
+ *  `
+ *    Invalid account
+ *  `
+ *  let valid = validateAccount('lastkiller')
+ *  console.log(valid)
+ *  `
+ *    true
+ *  `
+ */
+const validateAccount = username => {
   let i, label, len
 
-  if (!value) {
+  if (!username) {
     return "Account name should not be empty"
   }
 
-  const length = value.length
+  const length = username.length
 
   if (length < 3) {
     return "Account name should be at least 3 characters long"
@@ -18,7 +32,7 @@ const validateAccount = value => {
     return "Account name should be not be more than 16 characters"
   }
 
-  const ref = value.split(".")
+  const ref = username.split(".")
 
   for (i = 0, len = ref.length; i < len; i++) {
     label = ref[i]

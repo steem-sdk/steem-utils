@@ -1,7 +1,7 @@
 {
-  "coverage": "25%",
-  "expectCount": 28,
-  "actualCount": 7,
+  "coverage": "80.76%",
+  "expectCount": 26,
+  "actualCount": 21,
   "files": {
     "lib/constants.js": {
       "expectCount": 3,
@@ -9,18 +9,10 @@
       "undocumentLines": []
     },
     "lib/format.js": {
-      "expectCount": 10,
-      "actualCount": 1,
+      "expectCount": 8,
+      "actualCount": 7,
       "undocumentLines": [
-        6,
-        7,
-        123,
-        19,
-        62,
-        35,
-        97,
-        69,
-        92
+        200
       ]
     },
     "lib/helpers.js": {
@@ -37,43 +29,33 @@
     },
     "lib/meta.js": {
       "expectCount": 3,
-      "actualCount": 0,
-      "undocumentLines": [
-        7,
-        9,
-        45
-      ]
+      "actualCount": 3,
+      "undocumentLines": []
     },
     "lib/parse.js": {
       "expectCount": 3,
-      "actualCount": 0,
-      "undocumentLines": [
-        37,
-        5,
-        19
-      ]
+      "actualCount": 3,
+      "undocumentLines": []
     },
     "lib/sort.js": {
       "expectCount": 2,
-      "actualCount": 0,
+      "actualCount": 1,
       "undocumentLines": [
-        16,
-        4
+        28
       ]
     },
     "lib/stats.js": {
       "expectCount": 2,
-      "actualCount": 0,
+      "actualCount": 1,
       "undocumentLines": [
-        17,
-        4
+        29
       ]
     },
     "lib/validate.js": {
       "expectCount": 2,
       "actualCount": 1,
       "undocumentLines": [
-        44
+        58
       ]
     }
   }

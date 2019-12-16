@@ -35,19 +35,17 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVests">formatVests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-account">account</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-accountMeta">accountMeta</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-meta">meta</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-postMeta">postMeta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePost">parsePost</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePosts">parsePosts</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sortVotes">sortVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-voteStats">voteStats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validateAccount">validateAccount</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_100_PERCENT">STEEMIT_100_PERCENT</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS">STEEMIT_VOTE_REGENERATION_SECONDS</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-lib">lib</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parse">parse</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sort">sort</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stats">stats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-validate">validate</a></span></span></li>
@@ -57,9 +55,59 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">lib/parse.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { DefaultRenderer } from &quot;steem-content-renderer&quot;
-import { rendererDefaults } from &quot;./constants&quot;
+import { postBodySummary, renderPostBody } from &quot;@esteemapp/esteem-render-helpers&quot;
+import { rendererDefaults, summaryCount } from &quot;./constants&quot;
 import { argType } from &quot;./helpers&quot;
+import { formatRep, formatPayout, formatVotes, formatImage } from &quot;./format&quot;
 
+/**
+ *  Parses a Steem post object or array of Steem post body strings or objects
+ *  @param {content} content Steem post data
+ *  @param {object} config config for meta. The default is {@link rendererDefaults}
+ *  @returns {object} Returns object which contains meta data about the input post data
+ *  See {@link parsePost} for how single items are handled
+ *  See {@link parsePosts} for how items in array are handled
+ */
+const parse = (content, config = {}) =&gt;
+  argType(content) === &quot;array&quot; ? parsePosts(content, config)
+    : argType(content) === &quot;object&quot; &amp;&amp; content.body ? parsePost(content, config) : null
+
+/**
+ *  Parses a Steem post object or body string
+ *  @param {(object|string)} content Steem post data object or body string
+ *  @param {object} options config for meta. The default is {@link rendererDefaults}
+ *  @returns {(object|string)} Returns object or string of parsed body based on config options
+ *
+ *  @example
+ *  let parsed = parse(postData, {meta: {all: true}})
+ *  console.log(parsed)
+ *  `
+ *    image: &quot;...&quot;,
+ *    summary: &quot;...&quot;,
+ *    rep: &quot;...&quot;,
+ *    votes: &quot;...&quot;,
+ *    payout: &quot;...&quot;,
+ *    paid: &quot;...&quot;,
+ *    html: &quot;...&quot;,
+ *    ... // all other post object data variables remain untouched
+ *  ` *
+
+ *  @example
+ *  let parsed = parse(postData)
+ *  console.log(parsed)
+ *  `
+ *    html: &quot;...&quot;,
+ *    ... // all other post object data variables remain untouched
+ *
+ *  `
+ *
+ *  @example
+ *  let parsed = parse(postData.body)
+ *  console.log(parsed)
+ *  `
+ *    &quot;...&quot;,
+ *  `
+ */
 const parsePost = (content, options) =&gt; {
   const config = rendererDefaults(options)
   const renderer = new DefaultRenderer(config)
@@ -69,30 +117,54 @@ const parsePost = (content, options) =&gt; {
   if (type === &quot;string&quot;) {
     return renderer.render(content)
   } else if (type === &quot;object&quot;) {
-    if (content.body) return renderer.render(content.body)
+    if (!options.meta) {
+      if (content.body) return { ...content, html: renderer.render(content.body) }
+      return null
+    } else {
+      const metaType = argType(options.meta)
+      const meta = metaType === &quot;object&quot; ? options.meta : {}
+
+      const sevenDays = 7 * 24 * 60 * 60 * 1000
+
+      let body
+      const defaultBody = content.body
+      if (meta.summary) content.body = renderPostBody(content)
+
+      if (meta.all || meta.image) content.image = formatImage(content.body)
+      if (meta.all || meta.summary) content.summary = postBodySummary(content, config.summaryCount || summaryCount)
+      if (meta.all || meta.rep) content.rep = formatRep(content.author_reputation)
+      if (meta.all || meta.votes) content.votes = formatVotes(content)
+      if (meta.all || meta.payout) content.payout = formatPayout(content)
+      if (meta.all || meta.paid) content.paid = ((new Date()) - new Date(content.created)) &gt; sevenDays
+
+      content.body = defaultBody
+      content.html = renderer.render(content.body)
+
+      return content
+    }
+  } else {
+    return null
   }
-  return false
 }
 
+/**
+ *  Parses multiple Steem post objects or body strings
+ *  @param {array} content Array of Steem post data objects or body strings
+ *  @param {object} options config for meta. The default is {@link rendererDefaults}
+ *  @returns {array} Returns array of objects or strings of parsed body based on config options.
+ *  See {@link parsePost} for how each single item in the array in handled
+ *
+ *  @example
+ *  let parsed = await parse(postsData)
+ */
 const parsePosts = async (content, options) =&gt; {
-  const config = rendererDefaults(options)
-  const renderer = new DefaultRenderer(config)
-
   const promises = content.map(async post =&gt; {
-    const type = argType(post)
-
-    if (type === &quot;string&quot;) {
-      return renderer.render(post)
-    } else if (type === &quot;object&quot;) {
-      return renderer.render(content.body)
-    }
+    return parsePost(post, options)
   })
 
   const posts = await Promise.all(promises)
   return posts
 }
-
-const parse = { parsePost, parsePosts }
 
 export {
   parse as default, parsePost, parsePosts

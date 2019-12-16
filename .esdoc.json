@@ -18,6 +18,7 @@
         "author": "https://steemsdk.com",
         "image": "https://steemsdk.com/logo.png"
       }
-    }
+    },
+    {"name": "esdoc-ecmascript-proposal-plugin", "option": {"all": true}}
   ]
 }

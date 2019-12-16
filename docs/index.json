@@ -651,7 +651,7 @@
     "__docId__": 52,
     "kind": "file",
     "name": "lib/format.js",
-    "content": "\r\nimport { catchPostImage } from \"@esteemapp/esteem-render-helpers\"\r\nimport { voterCount } from \"./constants\"\r\nimport { argType } from \"./helpers\"\r\n\r\nconst STEEMIT_100_PERCENT = 10000\r\nconst STEEMIT_VOTE_REGENERATION_SECONDS = (5 * 60 * 60 * 24)\r\n\r\n/**\r\n * @ignore\r\n*/\r\nfunction log10 (str) {\r\n  const leadingDigits = parseInt(str.substring(0, 4))\r\n  const log = Math.log(leadingDigits) / Math.LN10 + 0.00000001\r\n  const n = str.length - 1\r\n  return n + (log - parseInt(log))\r\n}\r\n\r\nconst formatRep = rep2 => {\r\n  if (rep2 == null) return rep2\r\n  let rep = String(rep2)\r\n  const neg = rep.charAt(0) === \"-\"\r\n  rep = neg ? rep.substring(1) : rep\r\n\r\n  let out = log10(rep)\r\n  if (isNaN(out)) out = 0\r\n  out = Math.max(out - 9, 0) // @ -9, $0.50 earned is approx magnitude 1\r\n  out = (neg ? -1 : 1) * out\r\n  out = out * 9 + 25 // 9 points per magnitude. center at 25\r\n  // base-line 0 to darken and < 0 to auto hide (grep rephide)\r\n  out = parseInt(out)\r\n  return out\r\n}\r\n\r\nconst formatVotes = (raw = [], count = voterCount, downvoted = false) => {\r\n  if (!raw.length) return { votes: raw, len: 0 }\r\n\r\n  // remove 0 percent votes, which means user removed vote\r\n  const activeVotes = raw.filter(({ percent }) => Math.sign(percent) !== 0)\r\n\r\n  // get count\r\n  const len = activeVotes.length\r\n\r\n  // now sort by vote weight\r\n  const sortedVotes = activeVotes.sort((a, b) => Math.abs(parseInt(a.rshares)) > Math.abs(parseInt(b.rshares)) ? -1 : 1)\r\n\r\n  // return only names with vote type: upvote/downvote\r\n  let votes = sortedVotes.map(({ voter, percent }) => Math.sign(percent) > 0 ? `+ ${voter}` : `- ${voter}`)\r\n\r\n  // trim according to length\r\n  if (count < len) {\r\n    votes = votes.slice(0, count)\r\n    votes.push(`...and ${len - count} others`)\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  } else {\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  }\r\n}\r\n\r\nconst formatPayout = (post, fix = 0) => {\r\n  const pendingPayout = parseFloat(post.pending_payout_value)\r\n  const totalPayout = parseFloat(post.total_payout_value)\r\n  const curatorPayout = parseFloat(post.curator_payout_value)\r\n  return +(totalPayout + pendingPayout + curatorPayout).toFixed(fix)\r\n}\r\n\r\nfunction formatVotingPower (account) {\r\n  const maxMana = formatVests(account) * 1000000\r\n\r\n  const lastMana = parseInt(account.voting_manabar.current_mana)\r\n  const lastUpdateTime = account.voting_manabar.last_update_time\r\n  const lastUpdate = new Date(lastUpdateTime * 1000)\r\n  const elapsed = (new Date().getTime() - lastUpdate.getTime()) / 1000\r\n\r\n  let currentMana = lastMana + elapsed * (maxMana / 432000)\r\n\r\n  if (currentMana > maxMana) {\r\n    currentMana = maxMana\r\n  }\r\n\r\n  let currentManaPct = 0\r\n\r\n  if (maxMana > 0) {\r\n    currentManaPct = (currentMana / maxMana) * 100\r\n  }\r\n\r\n  return Math.round(currentManaPct)\r\n}\r\n\r\nfunction formatVests (account) {\r\n  return (parseFloat(account.vesting_shares) + parseFloat(account.received_vesting_shares)) -\r\n   (parseFloat(account.delegated_vesting_shares) + parseFloat(account.vesting_withdraw_rate))\r\n}\r\n\r\nfunction formatImage (data) {\r\n  const jsonMetadata = JSON.parse(data.json_metadata || \"{}\")\r\n\r\n  const image = jsonMetadata.image || jsonMetadata.images\r\n\r\n  if (image) {\r\n    const type = argType(image)\r\n    if (type === \"string\") {\r\n      return image\r\n    } else if (type === \"array\") {\r\n      return image[0]\r\n    } else if (type === \"object\") {\r\n      return image.url || image.featured || image.featured_image || image.featuredImage\r\n    } else {\r\n      return null\r\n    }\r\n  } else {\r\n    const img = jsonMetadata.img || jsonMetadata.featured_image || jsonMetadata.featuredImage\r\n    if (img && argType(img) === \"string\") {\r\n      return img\r\n    } else {\r\n      return catchPostImage(data)\r\n    }\r\n  }\r\n}\r\n\r\nconst format = { formatRep, formatPayout, formatVotes, formatImage, formatVotingPower, formatVests }\r\n\r\nexport {\r\n  format as default, formatRep, formatPayout, formatVotes, formatImage, formatVotingPower, formatVests\r\n}\r\n\r\n",
+    "content": "\r\nimport { catchPostImage } from \"@esteemapp/esteem-render-helpers\"\r\nimport { voterCount } from \"./constants\"\r\nimport { argType } from \"./helpers\"\r\n\r\n/**\r\n * @ignore\r\n*/\r\nfunction log10 (str) {\r\n  const leadingDigits = parseInt(str.substring(0, 4))\r\n  const log = Math.log(leadingDigits) / Math.LN10 + 0.00000001\r\n  const n = str.length - 1\r\n  return n + (log - parseInt(log))\r\n}\r\n\r\n/**\r\n *  Formats a Steem account's reputation\r\n *  @param {string} reputation Steem reputation value\r\n *  @returns {number} Formatted reputation value\r\n *\r\n *  @example\r\n *  let rep = formatRep(accountData.reputation)\r\n *  let rep = formatRep(post.author_reputation)\r\n *  console.log(accountData.reputation, rep)\r\n *  `\"23049917997434\", 64`\r\n */\r\nconst formatRep = reputation => {\r\n  if (reputation == null) return reputation\r\n  let rep = String(reputation)\r\n  const neg = rep.charAt(0) === \"-\"\r\n  rep = neg ? rep.substring(1) : rep\r\n\r\n  let out = log10(rep)\r\n  if (isNaN(out)) out = 0\r\n  out = Math.max(out - 9, 0) // @ -9, $0.50 earned is approx magnitude 1\r\n  out = (neg ? -1 : 1) * out\r\n  out = out * 9 + 25 // 9 points per magnitude. center at 25\r\n  // base-line 0 to darken and < 0 to auto hide (grep rephide)\r\n  out = parseInt(out)\r\n  return out\r\n}\r\n\r\n/**\r\n *  Formats a Steem post's active votes\r\n *  Will sort out removed votes, and order by weight\r\n *  Will trim return array to specified or default `count` {@link voterCount}\r\n *  @param {(string[]|object)} raw Post's active_votes,\r\n *  @param {string} count The number of returned account names\r\n *  @param {string} downvoted ?\r\n *  @returns {object} {votes, len}: `votes` is the array of votes, length is length of the votes\r\n *\r\n *  @example\r\n *  let votes = formatVotes(postData.active_votes || postData)\r\n *  console.log(votes.votes)\r\n *  `\r\n *  [\"+ therising\", \"+ upmewhale\", \"+ appreciator\", \"+ smartsteem\", \"+ rocky1\", \"+ buildawhale\",\r\n *  \"+ promobot\", \"+ jerrybanfield\", \"+ upmyvote\"\"+ postpromoter\", \"...and 1741 others\"]\r\n *  `\r\n */\r\nconst formatVotes = (raw = [], count = voterCount, downvoted = false) => {\r\n  if (!raw.length && !raw.active_votes.length) return { votes: raw, len: 0 }\r\n\r\n  const type = argType(raw)\r\n  if (type === \"object\" && raw.active_votes) {\r\n    raw = raw.active_votes\r\n  } else if (type !== \"array\") {\r\n    return { votes: raw, len: 0 }\r\n  }\r\n\r\n  // remove 0 percent votes, which means user removed vote\r\n  const activeVotes = raw.filter(({ percent }) => Math.sign(percent) !== 0)\r\n\r\n  // get count\r\n  const len = activeVotes.length\r\n\r\n  // now sort by vote weight\r\n  const sortedVotes = activeVotes.sort((a, b) => Math.abs(parseInt(a.rshares)) > Math.abs(parseInt(b.rshares)) ? -1 : 1)\r\n\r\n  // return only names with vote type: upvote/downvote\r\n  let votes = sortedVotes.map(({ voter, percent }) => Math.sign(percent) > 0 ? `+ ${voter}` : `- ${voter}`)\r\n\r\n  // trim according to length\r\n  if (count < len) {\r\n    votes = votes.slice(0, count)\r\n    votes.push(`...and ${len - count} others`)\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  } else {\r\n    // return { votes, len }\r\n    return { votes, len: downvoted ? -len : len }\r\n  }\r\n}\r\n\r\n/**\r\n *  Formats a Steem post's payout, does not discriminate for pending or completed posts. Values are for SBD\r\n *  @param {object} post object\r\n *  @param {number} fix Number of decimal places to fix it to\r\n *  @returns {number} Post earned value in SBD\r\n *\r\n *  @example\r\n *  let payout = formatPayout(postData)\r\n */\r\nconst formatPayout = (post, fix = 2) => {\r\n  if (argType(post) !== \"object\") return false\r\n\r\n  const pendingPayout = parseFloat(post.pending_payout_value)\r\n  const totalPayout = parseFloat(post.total_payout_value)\r\n  const curatorPayout = parseFloat(post.curator_payout_value)\r\n\r\n  return +((totalPayout + pendingPayout + curatorPayout).toFixed(fix))\r\n}\r\n\r\n/**\r\n *  Formats a Steem account's voting power using the manarbar data\r\n *  @param {object} account Steem account data, not account username\r\n *  @returns {number} Formatted voting power in percentage\r\n *\r\n *  @example\r\n *  let votingPower = formatVotingPower(accountData)\r\n */\r\nfunction formatVotingPower (account) {\r\n  if (argType(account) !== \"object\") return false\r\n\r\n  const maxMana = formatVests(account) * 1000000\r\n\r\n  const lastMana = parseInt(account.voting_manabar.current_mana)\r\n  const lastUpdateTime = account.voting_manabar.last_update_time\r\n  const lastUpdate = new Date(lastUpdateTime * 1000)\r\n  const elapsed = (new Date().getTime() - lastUpdate.getTime()) / 1000\r\n\r\n  let currentMana = lastMana + elapsed * (maxMana / 432000)\r\n\r\n  if (currentMana > maxMana) {\r\n    currentMana = maxMana\r\n  }\r\n\r\n  let currentManaPct = 0\r\n\r\n  if (maxMana > 0) {\r\n    currentManaPct = (currentMana / maxMana) * 100\r\n  }\r\n\r\n  return Math.round(currentManaPct)\r\n}\r\n\r\n/**\r\n *  Formats a Steem account's vests\r\n *  @param {object} account - Steem account's data, not username\r\n *  @returns {number} Formatted account vests value\r\n *\r\n *  @example\r\n *  let vests = formatVests(accountData)\r\n */\r\nfunction formatVests (account) {\r\n  if (argType(account) !== \"object\") return false\r\n\r\n  return (parseFloat(account.vesting_shares) + parseFloat(account.received_vesting_shares)) -\r\n   (parseFloat(account.delegated_vesting_shares) + parseFloat(account.vesting_withdraw_rate))\r\n}\r\n\r\n/**\r\n *  Extract the first image or potentially featured image for a post\r\n *  @param {(string|object)} data Post data object or post body string\r\n *  @returns {string} Returns the URL of first image for a post, meant to be used to extract featured images\r\n *\r\n *  @example\r\n *  let post_featured_image_url = formatImage(postData.body || postData)\r\n */\r\nfunction formatImage (data) {\r\n  const dataType = argType(data)\r\n  if (dataType !== \"object\") {\r\n    const jsonMetadata = JSON.parse(data.json_metadata || \"{}\")\r\n\r\n    const image = jsonMetadata.image || jsonMetadata.images\r\n\r\n    if (image) {\r\n      const type = argType(image)\r\n      if (type === \"string\") {\r\n        return image\r\n      } else if (type === \"array\") {\r\n        return image[0]\r\n      } else if (type === \"object\") {\r\n        return image.url || image.featured || image.featured_image || image.featuredImage\r\n      } else {\r\n        return null\r\n      }\r\n    } else {\r\n      const img = jsonMetadata.img || jsonMetadata.featured_image || jsonMetadata.featuredImage\r\n      if (img && argType(img) === \"string\") {\r\n        return img\r\n      } else {\r\n        return catchPostImage(data)\r\n      }\r\n    }\r\n  } else if (dataType === \"string\") {\r\n    return catchPostImage(data)\r\n  }\r\n}\r\n\r\nconst format = { formatRep, formatPayout, formatVotes, formatImage, formatVotingPower, formatVests }\r\n\r\nexport {\r\n  format as default, formatRep, formatPayout, formatVotes, formatImage, formatVotingPower, formatVests\r\n}\r\n\r\n",
     "static": true,
     "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/steem inc/projects/steem sdk/lib/js/utils/src/lib/format.js",
     "access": "public",
@@ -660,46 +660,6 @@
   },
   {
     "__docId__": 53,
-    "kind": "variable",
-    "name": "STEEMIT_100_PERCENT",
-    "memberof": "lib/format.js",
-    "static": true,
-    "longname": "lib/format.js~STEEMIT_100_PERCENT",
-    "access": "public",
-    "export": false,
-    "importPath": "steem-utils/lib/format.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 6,
-    "undocument": true,
-    "type": {
-      "types": [
-        "number"
-      ]
-    }
-  },
-  {
-    "__docId__": 54,
-    "kind": "variable",
-    "name": "STEEMIT_VOTE_REGENERATION_SECONDS",
-    "memberof": "lib/format.js",
-    "static": true,
-    "longname": "lib/format.js~STEEMIT_VOTE_REGENERATION_SECONDS",
-    "access": "public",
-    "export": false,
-    "importPath": "steem-utils/lib/format.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 55,
     "kind": "function",
     "name": "log10",
     "memberof": "lib/format.js",
@@ -712,7 +672,7 @@
     "importPath": "steem-utils/lib/format.js",
     "importStyle": null,
     "description": "",
-    "lineNumber": 12,
+    "lineNumber": 9,
     "ignore": true,
     "params": [
       {
@@ -729,7 +689,7 @@
     }
   },
   {
-    "__docId__": 56,
+    "__docId__": 54,
     "kind": "variable",
     "name": "format",
     "memberof": "lib/format.js",
@@ -740,7 +700,7 @@
     "importPath": "steem-utils/lib/format.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 123,
+    "lineNumber": 200,
     "undocument": true,
     "type": {
       "types": [
@@ -749,7 +709,7 @@
     }
   },
   {
-    "__docId__": 57,
+    "__docId__": 55,
     "kind": "function",
     "name": "formatRep",
     "memberof": "lib/format.js",
@@ -761,25 +721,40 @@
     "export": true,
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatRep}",
-    "description": null,
-    "lineNumber": 19,
-    "undocument": true,
+    "description": " Formats a Steem account's reputation",
+    "examples": [
+      " let rep = formatRep(accountData.reputation)\n let rep = formatRep(post.author_reputation)\n console.log(accountData.reputation, rep)\n `\"23049917997434\", 64`"
+    ],
+    "lineNumber": 27,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{number} Formatted reputation value"
+      }
+    ],
     "params": [
       {
-        "name": "rep2",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "reputation",
+        "description": "Steem reputation value"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "number"
+      ],
+      "spread": false,
+      "description": "Formatted reputation value"
     }
   },
   {
-    "__docId__": 58,
+    "__docId__": 56,
     "kind": "function",
     "name": "formatPayout",
     "memberof": "lib/format.js",
@@ -791,34 +766,50 @@
     "export": true,
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatPayout}",
-    "description": null,
-    "lineNumber": 62,
-    "undocument": true,
+    "description": " Formats a Steem post's payout, does not discriminate for pending or completed posts. Values are for SBD",
+    "examples": [
+      " let payout = formatPayout(postData)"
+    ],
+    "lineNumber": 103,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{number} Post earned value in SBD"
+      }
+    ],
     "params": [
       {
-        "name": "post",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "post",
+        "description": "object"
       },
       {
-        "name": "fix",
-        "optional": true,
+        "nullable": null,
         "types": [
           "number"
         ],
-        "defaultRaw": 0,
-        "defaultValue": "0"
+        "spread": false,
+        "optional": false,
+        "name": "fix",
+        "description": "Number of decimal places to fix it to"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "number"
+      ],
+      "spread": false,
+      "description": "Post earned value in SBD"
     }
   },
   {
-    "__docId__": 59,
+    "__docId__": 57,
     "kind": "function",
     "name": "formatVotes",
     "memberof": "lib/format.js",
@@ -830,46 +821,61 @@
     "export": true,
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatVotes}",
-    "description": null,
-    "lineNumber": 35,
-    "undocument": true,
+    "description": " Formats a Steem post's active votes\n Will sort out removed votes, and order by weight\n Will trim return array to specified or default `count` {@link voterCount}",
+    "examples": [
+      " let votes = formatVotes(postData.active_votes || postData)\n console.log(votes.votes)\n `\n [\"+ therising\", \"+ upmewhale\", \"+ appreciator\", \"+ smartsteem\", \"+ rocky1\", \"+ buildawhale\",\n \"+ promobot\", \"+ jerrybanfield\", \"+ upmyvote\"\"+ postpromoter\", \"...and 1741 others\"]\n `"
+    ],
+    "lineNumber": 60,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} {votes, len}: `votes` is the array of votes, length is length of the votes"
+      }
+    ],
     "params": [
       {
+        "nullable": null,
+        "types": [
+          "string[]",
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
         "name": "raw",
-        "optional": true,
-        "types": [
-          "*[]"
-        ],
-        "defaultRaw": [],
-        "defaultValue": "[]"
+        "description": "Post's active_votes,"
       },
       {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
         "name": "count",
-        "optional": true,
-        "types": [
-          "*"
-        ],
-        "defaultRaw": "voterCount",
-        "defaultValue": "voterCount"
+        "description": "The number of returned account names"
       },
       {
-        "name": "downvoted",
-        "optional": true,
+        "nullable": null,
         "types": [
-          "boolean"
+          "string"
         ],
-        "defaultRaw": false,
-        "defaultValue": "false"
+        "spread": false,
+        "optional": false,
+        "name": "downvoted",
+        "description": "?"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "{\"votes\": *, \"len\": *}"
-      ]
+        "object"
+      ],
+      "spread": false,
+      "description": "{votes, len}: `votes` is the array of votes, length is length of the votes"
     }
   },
   {
-    "__docId__": 60,
+    "__docId__": 58,
     "kind": "function",
     "name": "formatImage",
     "memberof": "lib/format.js",
@@ -881,25 +887,41 @@
     "export": true,
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatImage}",
-    "description": null,
-    "lineNumber": 97,
-    "undocument": true,
+    "description": " Extract the first image or potentially featured image for a post",
+    "examples": [
+      " let post_featured_image_url = formatImage(postData.body || postData)"
+    ],
+    "lineNumber": 169,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} Returns the URL of first image for a post, meant to be used to extract featured images"
+      }
+    ],
     "params": [
       {
-        "name": "data",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "string",
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Post data object or post body string"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "string"
+      ],
+      "spread": false,
+      "description": "Returns the URL of first image for a post, meant to be used to extract featured images"
     }
   },
   {
-    "__docId__": 61,
+    "__docId__": 59,
     "kind": "function",
     "name": "formatVotingPower",
     "memberof": "lib/format.js",
@@ -911,25 +933,40 @@
     "export": true,
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatVotingPower}",
-    "description": null,
-    "lineNumber": 69,
-    "undocument": true,
+    "description": " Formats a Steem account's voting power using the manarbar data",
+    "examples": [
+      " let votingPower = formatVotingPower(accountData)"
+    ],
+    "lineNumber": 121,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{number} Formatted voting power in percentage"
+      }
+    ],
     "params": [
       {
-        "name": "account",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "account",
+        "description": "Steem account data, not account username"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "number"
+      ],
+      "spread": false,
+      "description": "Formatted voting power in percentage"
     }
   },
   {
-    "__docId__": 62,
+    "__docId__": 60,
     "kind": "function",
     "name": "formatVests",
     "memberof": "lib/format.js",
@@ -941,25 +978,40 @@
     "export": true,
     "importPath": "steem-utils/lib/format.js",
     "importStyle": "{formatVests}",
-    "description": null,
-    "lineNumber": 92,
-    "undocument": true,
+    "description": " Formats a Steem account's vests",
+    "examples": [
+      " let vests = formatVests(accountData)"
+    ],
+    "lineNumber": 154,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{number} Formatted account vests value"
+      }
+    ],
     "params": [
       {
-        "name": "account",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "account",
+        "description": "Steem account's data, not username"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "number"
+      ],
+      "spread": false,
+      "description": "Formatted account vests value"
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 61,
     "kind": "file",
     "name": "lib/helpers.js",
     "content": "/**\r\n * @ignore\r\n*/\r\nexport const argType = arg => {\r\n  if (Array.isArray(arg)) {\r\n    return \"array\"\r\n  } else if (Object.prototype.toString.call(arg) === \"[object Object]\") {\r\n    return \"object\"\r\n  } else if (typeof arg.valueOf() === \"string\") {\r\n    return \"string\"\r\n  } else if (typeof arg.valueOf() === \"number\") {\r\n    return \"number\"\r\n  } else if (typeof arg.valueOf() === \"boolean\") {\r\n    return \"boolean\"\r\n  }\r\n}\r\n\r\n/**\r\n * @ignore\r\n*/\r\nexport const retrieveVotes = votes => {\r\n  if (!Array.isArray(votes) && !Object.prototype.toString.call(votes) === \"[object Object]\") {\r\n    throw new Error(\"Invalid parameter\")\r\n  } else if (Object.prototype.toString.call(votes) === \"[object Object]\") {\r\n    votes = votes.active_votes\r\n    if (!Array.isArray(votes)) {\r\n      throw new Error(\"Invalid parameter\")\r\n    }\r\n  }\r\n  return votes\r\n}\r\n",
@@ -970,7 +1022,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 64,
+    "__docId__": 62,
     "kind": "function",
     "name": "argType",
     "memberof": "lib/helpers.js",
@@ -1000,7 +1052,7 @@
     }
   },
   {
-    "__docId__": 65,
+    "__docId__": 63,
     "kind": "function",
     "name": "retrieveVotes",
     "memberof": "lib/helpers.js",
@@ -1030,7 +1082,7 @@
     }
   },
   {
-    "__docId__": 66,
+    "__docId__": 64,
     "kind": "file",
     "name": "lib/index.js",
     "content": "\r\nimport parse from \"./parse\"\r\nimport validate from \"./validate\"\r\nimport format from \"./format\"\r\nimport stats from \"./stats\"\r\nimport sort from \"./sort\"\r\nimport meta from \"./meta\"\r\n\r\nconst lib = { stats, sort, parse, format, meta }\r\n\r\nexport {\r\n  lib as default, stats, sort, parse, format, meta\r\n}\r\n",
@@ -1041,7 +1093,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 67,
+    "__docId__": 65,
     "kind": "variable",
     "name": "lib",
     "memberof": "lib/index.js",
@@ -1061,10 +1113,10 @@
     }
   },
   {
-    "__docId__": 68,
+    "__docId__": 66,
     "kind": "file",
     "name": "lib/meta.js",
-    "content": "\r\nimport { postBodySummary, renderPostBody } from \"@esteemapp/esteem-render-helpers\"\r\n\r\nimport { summaryCount } from \"./constants\"\r\nimport { formatPayout, formatRep, formatImage, formatVotingPower } from \"./format\"\r\n\r\nconst meta = (data, config = {}) => data.author ? post(data, config) : account(data, config)\r\n\r\nconst account = (acc, config) => {\r\n  const metadata = JSON.parse(acc.json_metadata || \"{}\")\r\n  const profile = metadata.profile || {}\r\n\r\n  return {\r\n    // profile\r\n    name: profile.name,\r\n    about: profile.about || profile.description || profile.bio,\r\n    avatar: profile.profile_image,\r\n    username: acc.name,\r\n    location: profile.location,\r\n    reputation: formatRep(acc.reputation),\r\n\r\n    // details\r\n    id: acc.id,\r\n    created: acc.created,\r\n    proxy: acc.proxy,\r\n    post_count: acc.post_count,\r\n    voting_power: formatVotingPower(acc),\r\n    can_vote: acc.can_vote,\r\n    mined: acc.mined,\r\n    recovery_account: acc.recovery_account,\r\n    last_account_recovery: acc.last_account_recovery,\r\n    reset_account: acc.reset_account,\r\n    comment_count: acc.comment_count,\r\n    lifetime_vote_count: acc.lifetime_vote_count,\r\n    blockstack: profile.blockstack,\r\n    pending_claimed_accounts: acc.pending_claimed_accounts,\r\n\r\n    // wallet\r\n    steem: acc.balance,\r\n    sbd: acc.sbd_balance,\r\n    savings: acc.savings_balance\r\n  }\r\n}\r\n\r\nconst post = (data, config) => {\r\n  data.body = renderPostBody(data)\r\n\r\n  return {\r\n    title: data.title,\r\n    summary: postBodySummary(data, config.summaryCount || summaryCount),\r\n    payout: formatPayout(data),\r\n    image: formatImage(data.body),\r\n    created: data.created,\r\n    comments_count: data.children,\r\n    votes_count: data.active_votes.length\r\n  }\r\n}\r\n\r\nexport {\r\n  meta as default, account, post\r\n}\r\n",
+    "content": "\r\nimport { postBodySummary, renderPostBody } from \"@esteemapp/esteem-render-helpers\"\r\n\r\nimport { summaryCount } from \"./constants\"\r\nimport { formatPayout, formatRep, formatImage, formatVotingPower } from \"./format\"\r\n\r\n/**\r\n *  Returns meta data from Steem post or account data\r\n *  @param {object} data Steem account or post data\r\n *  @param {object} config config for meta\r\n *  @returns {object} Returns object which contains meta data about the input account or post data.\r\n *  For `meta(accountData)` see {@link accountMeta} and for `meta(postData)` see {@link postMeta}\r\n *\r\n *  @example\r\n *  let metaData = meta(accountData || postData)\r\n *  console.log(metaData)\r\n */\r\nconst meta = (data, config = {}) => data.author ? postMeta(data, config) : accountMeta(data, config)\r\n\r\n/**\r\n *  Returns meta data from Steem account data\r\n *  @param {object} data Steem account data\r\n *  @param {object} config config for meta\r\n *  @returns {object} Returns object which contains meta data about the input account data\r\n *\r\n *  @example\r\n *  let accountMetaData = accountMeta(accountData)\r\n *  console.log(accountMetaData)\r\n *  `\r\n *    // profile\r\n *    name: \"...\",\r\n *    about: \"...\",\r\n *    avatar: \"...\"\r\n *    username: \"...\",\r\n *    location: \"...\",\r\n *    reputation: \"...\",\r\n *\r\n *    // details\r\n *    id: \"...\",\r\n *    created: \"...\",\r\n *    proxy: \"...\",\r\n *    post_count: \"...\",\r\n *    voting_power: \"...\",\r\n *    can_vote: \"...\",\r\n *    mined: \"...\",\r\n *    recovery_account: \"...\",\r\n *    last_account_recovery: \"...\",\r\n *    reset_account: \"...\",\r\n *    comment_count: \"...\",\r\n *    lifetime_vote_count: \"...\"\r\n *    blockstack: \"...\",\r\n *    pending_claimed_accounts: \"...\",\r\n *\r\n *    // wallet\r\n *    steem: \"...\",\r\n *    sbd: \"...\",\r\n *    savings: \"...\"\r\n *  `\r\n */\r\nconst accountMeta = (data, config) => {\r\n  const metadata = JSON.parse(data.json_metadata || \"{}\")\r\n  const profile = metadata.profile || {}\r\n\r\n  return {\r\n    // profile\r\n    name: profile.name,\r\n    about: profile.about || profile.description || profile.bio,\r\n    avatar: profile.profile_image,\r\n    username: data.name,\r\n    location: profile.location,\r\n    reputation: formatRep(data.reputation),\r\n\r\n    // details\r\n    id: data.id,\r\n    created: data.created,\r\n    proxy: data.proxy,\r\n    post_count: data.post_count,\r\n    voting_power: formatVotingPower(data),\r\n    can_vote: data.can_vote,\r\n    mined: data.mined,\r\n    recovery_account: data.recovery_account,\r\n    last_account_recovery: data.last_account_recovery,\r\n    reset_account: data.reset_account,\r\n    comment_count: data.comment_count,\r\n    lifetime_vote_count: data.lifetime_vote_count,\r\n    blockstack: profile.blockstack,\r\n    pending_claimed_accounts: data.pending_claimed_accounts,\r\n\r\n    // wallet\r\n    steem: data.balance,\r\n    sbd: data.sbd_balance,\r\n    savings: data.savings_balance\r\n  }\r\n}\r\n\r\n/**\r\n *  Returns meta data from Steem post data\r\n *  @param {object} data Steem post data\r\n *  @param {object} config config for meta\r\n *  @returns {object} Returns object which contains meta data about the input post data\r\n *\r\n *  @example\r\n *  let postMetaData = postMeta(postData)\r\n *  console.log(postMetaData)\r\n *  `\r\n *    title: \"...\",\r\n *    summary: \"...\"\r\n *    payout: \"...\",\r\n *    image: \"...\",\r\n *    created: \"...\",\r\n *    comments_count: \"...\",\r\n *    votes_count: \"...\"\r\n *  `\r\n */\r\nconst postMeta = (data, config) => {\r\n  data.body = renderPostBody(data)\r\n\r\n  return {\r\n    title: data.title,\r\n    summary: postBodySummary(data, config.summaryCount || summaryCount),\r\n    payout: formatPayout(data),\r\n    image: formatImage(data.body),\r\n    created: data.created,\r\n    comments_count: data.children,\r\n    votes_count: data.active_votes.length\r\n  }\r\n}\r\n\r\nexport {\r\n  meta as default, accountMeta, postMeta\r\n}\r\n",
     "static": true,
     "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/steem inc/projects/steem sdk/lib/js/utils/src/lib/meta.js",
     "access": "public",
@@ -1072,7 +1124,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 69,
+    "__docId__": 67,
     "kind": "function",
     "name": "meta",
     "memberof": "lib/meta.js",
@@ -1084,105 +1136,163 @@
     "export": false,
     "importPath": "steem-utils/lib/meta.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
-    "params": [
+    "description": " Returns meta data from Steem post or account data",
+    "examples": [
+      " let metaData = meta(accountData || postData)\n console.log(metaData)"
+    ],
+    "lineNumber": 18,
+    "unknown": [
       {
-        "name": "data",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "config",
-        "optional": true,
-        "types": [
-          "{}"
-        ],
-        "defaultRaw": {},
-        "defaultValue": "{}"
+        "tagName": "@returns",
+        "tagValue": "{object} Returns object which contains meta data about the input account or post data.\n For `meta(accountData)` see {@link accountMeta} and for `meta(postData)` see {@link postMeta}"
       }
     ],
-    "return": null
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Steem account or post data"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "config",
+        "description": "config for meta"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "Returns object which contains meta data about the input account or post data.\n For `meta(accountData)` see {@link accountMeta} and for `meta(postData)` see {@link postMeta}"
+    }
+  },
+  {
+    "__docId__": 68,
+    "kind": "function",
+    "name": "accountMeta",
+    "memberof": "lib/meta.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/meta.js~accountMeta",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/meta.js",
+    "importStyle": "{accountMeta}",
+    "description": " Returns meta data from Steem account data",
+    "examples": [
+      " let accountMetaData = accountMeta(accountData)\n console.log(accountMetaData)\n `\n   // profile\n   name: \"...\",\n   about: \"...\",\n   avatar: \"...\"\n   username: \"...\",\n   location: \"...\",\n   reputation: \"...\",\n\n   // details\n   id: \"...\",\n   created: \"...\",\n   proxy: \"...\",\n   post_count: \"...\",\n   voting_power: \"...\",\n   can_vote: \"...\",\n   mined: \"...\",\n   recovery_account: \"...\",\n   last_account_recovery: \"...\",\n   reset_account: \"...\",\n   comment_count: \"...\",\n   lifetime_vote_count: \"...\"\n   blockstack: \"...\",\n   pending_claimed_accounts: \"...\",\n\n   // wallet\n   steem: \"...\",\n   sbd: \"...\",\n   savings: \"...\"\n `"
+    ],
+    "lineNumber": 60,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} Returns object which contains meta data about the input account data"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Steem account data"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "config",
+        "description": "config for meta"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "Returns object which contains meta data about the input account data"
+    }
+  },
+  {
+    "__docId__": 69,
+    "kind": "function",
+    "name": "postMeta",
+    "memberof": "lib/meta.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/meta.js~postMeta",
+    "access": "public",
+    "export": true,
+    "importPath": "steem-utils/lib/meta.js",
+    "importStyle": "{postMeta}",
+    "description": " Returns meta data from Steem post data",
+    "examples": [
+      " let postMetaData = postMeta(postData)\n console.log(postMetaData)\n `\n   title: \"...\",\n   summary: \"...\"\n   payout: \"...\",\n   image: \"...\",\n   created: \"...\",\n   comments_count: \"...\",\n   votes_count: \"...\"\n `"
+    ],
+    "lineNumber": 115,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} Returns object which contains meta data about the input post data"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Steem post data"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "config",
+        "description": "config for meta"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "Returns object which contains meta data about the input post data"
+    }
   },
   {
     "__docId__": 70,
-    "kind": "function",
-    "name": "account",
-    "memberof": "lib/meta.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "lib/meta.js~account",
-    "access": "public",
-    "export": true,
-    "importPath": "steem-utils/lib/meta.js",
-    "importStyle": "{account}",
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
-    "params": [
-      {
-        "name": "acc",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "config",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
-      "types": [
-        "{\"name\": *, \"about\": *, \"avatar\": *, \"username\": *, \"location\": *, \"reputation\": *, \"id\": *, \"created\": *, \"proxy\": *, \"post_count\": *, \"voting_power\": *, \"can_vote\": *, \"mined\": *, \"recovery_account\": *, \"last_account_recovery\": *, \"reset_account\": *, \"comment_count\": *, \"lifetime_vote_count\": *, \"blockstack\": *, \"pending_claimed_accounts\": *, \"steem\": *, \"sbd\": *, \"savings\": *}"
-      ]
-    }
-  },
-  {
-    "__docId__": 71,
-    "kind": "function",
-    "name": "post",
-    "memberof": "lib/meta.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "lib/meta.js~post",
-    "access": "public",
-    "export": true,
-    "importPath": "steem-utils/lib/meta.js",
-    "importStyle": "{post}",
-    "description": null,
-    "lineNumber": 45,
-    "undocument": true,
-    "params": [
-      {
-        "name": "data",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "config",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
-      "types": [
-        "{\"title\": *, \"summary\": *, \"payout\": *, \"image\": *, \"created\": *, \"comments_count\": *, \"votes_count\": *}"
-      ]
-    }
-  },
-  {
-    "__docId__": 72,
     "kind": "file",
     "name": "lib/parse.js",
-    "content": "import { DefaultRenderer } from \"steem-content-renderer\"\r\nimport { rendererDefaults } from \"./constants\"\r\nimport { argType } from \"./helpers\"\r\n\r\nconst parsePost = (content, options) => {\r\n  const config = rendererDefaults(options)\r\n  const renderer = new DefaultRenderer(config)\r\n\r\n  const type = argType(content)\r\n\r\n  if (type === \"string\") {\r\n    return renderer.render(content)\r\n  } else if (type === \"object\") {\r\n    if (content.body) return renderer.render(content.body)\r\n  }\r\n  return false\r\n}\r\n\r\nconst parsePosts = async (content, options) => {\r\n  const config = rendererDefaults(options)\r\n  const renderer = new DefaultRenderer(config)\r\n\r\n  const promises = content.map(async post => {\r\n    const type = argType(post)\r\n\r\n    if (type === \"string\") {\r\n      return renderer.render(post)\r\n    } else if (type === \"object\") {\r\n      return renderer.render(content.body)\r\n    }\r\n  })\r\n\r\n  const posts = await Promise.all(promises)\r\n  return posts\r\n}\r\n\r\nconst parse = { parsePost, parsePosts }\r\n\r\nexport {\r\n  parse as default, parsePost, parsePosts\r\n}\r\n",
+    "content": "import { DefaultRenderer } from \"steem-content-renderer\"\r\nimport { postBodySummary, renderPostBody } from \"@esteemapp/esteem-render-helpers\"\r\nimport { rendererDefaults, summaryCount } from \"./constants\"\r\nimport { argType } from \"./helpers\"\r\nimport { formatRep, formatPayout, formatVotes, formatImage } from \"./format\"\r\n\r\n/**\r\n *  Parses a Steem post object or array of Steem post body strings or objects\r\n *  @param {content} content Steem post data\r\n *  @param {object} config config for meta. The default is {@link rendererDefaults}\r\n *  @returns {object} Returns object which contains meta data about the input post data\r\n *  See {@link parsePost} for how single items are handled\r\n *  See {@link parsePosts} for how items in array are handled\r\n */\r\nconst parse = (content, config = {}) =>\r\n  argType(content) === \"array\" ? parsePosts(content, config)\r\n    : argType(content) === \"object\" && content.body ? parsePost(content, config) : null\r\n\r\n/**\r\n *  Parses a Steem post object or body string\r\n *  @param {(object|string)} content Steem post data object or body string\r\n *  @param {object} options config for meta. The default is {@link rendererDefaults}\r\n *  @returns {(object|string)} Returns object or string of parsed body based on config options\r\n *\r\n *  @example\r\n *  let parsed = parse(postData, {meta: {all: true}})\r\n *  console.log(parsed)\r\n *  `\r\n *    image: \"...\",\r\n *    summary: \"...\",\r\n *    rep: \"...\",\r\n *    votes: \"...\",\r\n *    payout: \"...\",\r\n *    paid: \"...\",\r\n *    html: \"...\",\r\n *    ... // all other post object data variables remain untouched\r\n *  ` *\r\n\r\n *  @example\r\n *  let parsed = parse(postData)\r\n *  console.log(parsed)\r\n *  `\r\n *    html: \"...\",\r\n *    ... // all other post object data variables remain untouched\r\n *\r\n *  `\r\n *\r\n *  @example\r\n *  let parsed = parse(postData.body)\r\n *  console.log(parsed)\r\n *  `\r\n *    \"...\",\r\n *  `\r\n */\r\nconst parsePost = (content, options) => {\r\n  const config = rendererDefaults(options)\r\n  const renderer = new DefaultRenderer(config)\r\n\r\n  const type = argType(content)\r\n\r\n  if (type === \"string\") {\r\n    return renderer.render(content)\r\n  } else if (type === \"object\") {\r\n    if (!options.meta) {\r\n      if (content.body) return { ...content, html: renderer.render(content.body) }\r\n      return null\r\n    } else {\r\n      const metaType = argType(options.meta)\r\n      const meta = metaType === \"object\" ? options.meta : {}\r\n\r\n      const sevenDays = 7 * 24 * 60 * 60 * 1000\r\n\r\n      let body\r\n      const defaultBody = content.body\r\n      if (meta.summary) content.body = renderPostBody(content)\r\n\r\n      if (meta.all || meta.image) content.image = formatImage(content.body)\r\n      if (meta.all || meta.summary) content.summary = postBodySummary(content, config.summaryCount || summaryCount)\r\n      if (meta.all || meta.rep) content.rep = formatRep(content.author_reputation)\r\n      if (meta.all || meta.votes) content.votes = formatVotes(content)\r\n      if (meta.all || meta.payout) content.payout = formatPayout(content)\r\n      if (meta.all || meta.paid) content.paid = ((new Date()) - new Date(content.created)) > sevenDays\r\n\r\n      content.body = defaultBody\r\n      content.html = renderer.render(content.body)\r\n\r\n      return content\r\n    }\r\n  } else {\r\n    return null\r\n  }\r\n}\r\n\r\n/**\r\n *  Parses multiple Steem post objects or body strings\r\n *  @param {array} content Array of Steem post data objects or body strings\r\n *  @param {object} options config for meta. The default is {@link rendererDefaults}\r\n *  @returns {array} Returns array of objects or strings of parsed body based on config options.\r\n *  See {@link parsePost} for how each single item in the array in handled\r\n *\r\n *  @example\r\n *  let parsed = await parse(postsData)\r\n */\r\nconst parsePosts = async (content, options) => {\r\n  const promises = content.map(async post => {\r\n    return parsePost(post, options)\r\n  })\r\n\r\n  const posts = await Promise.all(promises)\r\n  return posts\r\n}\r\n\r\nexport {\r\n  parse as default, parsePost, parsePosts\r\n}\r\n",
     "static": true,
     "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/steem inc/projects/steem sdk/lib/js/utils/src/lib/parse.js",
     "access": "public",
@@ -1190,27 +1300,59 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 73,
-    "kind": "variable",
+    "__docId__": 71,
+    "kind": "function",
     "name": "parse",
     "memberof": "lib/parse.js",
+    "generator": false,
+    "async": false,
     "static": true,
     "longname": "lib/parse.js~parse",
     "access": "public",
     "export": false,
     "importPath": "steem-utils/lib/parse.js",
     "importStyle": null,
-    "description": null,
-    "lineNumber": 37,
-    "undocument": true,
-    "type": {
+    "description": " Parses a Steem post object or array of Steem post body strings or objects",
+    "lineNumber": 15,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} Returns object which contains meta data about the input post data\n See {@link parsePost} for how single items are handled\n See {@link parsePosts} for how items in array are handled"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "content"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "content",
+        "description": "Steem post data"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "config",
+        "description": "config for meta. The default is {@link rendererDefaults}"
+      }
+    ],
+    "return": {
+      "nullable": null,
       "types": [
-        "{\"parsePost\": *, \"parsePosts\": *}"
-      ]
+        "object"
+      ],
+      "spread": false,
+      "description": "Returns object which contains meta data about the input post data\n See {@link parsePost} for how single items are handled\n See {@link parsePosts} for how items in array are handled"
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 72,
     "kind": "function",
     "name": "parsePost",
     "memberof": "lib/parse.js",
@@ -1222,31 +1364,54 @@
     "export": true,
     "importPath": "steem-utils/lib/parse.js",
     "importStyle": "{parsePost}",
-    "description": null,
-    "lineNumber": 5,
-    "undocument": true,
+    "description": " Parses a Steem post object or body string",
+    "examples": [
+      " let parsed = parse(postData, {meta: {all: true}})\n console.log(parsed)\n `\n   image: \"...\",\n   summary: \"...\",\n   rep: \"...\",\n   votes: \"...\",\n   payout: \"...\",\n   paid: \"...\",\n   html: \"...\",\n   ... // all other post object data variables remain untouched\n ` *",
+      " let parsed = parse(postData)\n console.log(parsed)\n `\n   html: \"...\",\n   ... // all other post object data variables remain untouched\n\n `",
+      " let parsed = parse(postData.body)\n console.log(parsed)\n `\n   \"...\",\n `"
+    ],
+    "lineNumber": 55,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{(object|string)} Returns object or string of parsed body based on config options"
+      }
+    ],
     "params": [
       {
-        "name": "content",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "object",
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "content",
+        "description": "Steem post data object or body string"
       },
       {
-        "name": "options",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "config for meta. The default is {@link rendererDefaults}"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "boolean"
-      ]
+        "object",
+        "string"
+      ],
+      "spread": false,
+      "description": "Returns object or string of parsed body based on config options"
     }
   },
   {
-    "__docId__": 75,
+    "__docId__": 73,
     "kind": "function",
     "name": "parsePosts",
     "memberof": "lib/parse.js",
@@ -1258,34 +1423,53 @@
     "export": true,
     "importPath": "steem-utils/lib/parse.js",
     "importStyle": "{parsePosts}",
-    "description": null,
-    "lineNumber": 19,
-    "undocument": true,
+    "description": " Parses multiple Steem post objects or body strings",
+    "examples": [
+      " let parsed = await parse(postsData)"
+    ],
+    "lineNumber": 104,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{array} Returns array of objects or strings of parsed body based on config options.\n See {@link parsePost} for how each single item in the array in handled"
+      }
+    ],
     "params": [
       {
-        "name": "content",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "content",
+        "description": "Array of Steem post data objects or body strings"
       },
       {
-        "name": "options",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "config for meta. The default is {@link rendererDefaults}"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "array"
+      ],
+      "spread": false,
+      "description": "Returns array of objects or strings of parsed body based on config options.\n See {@link parsePost} for how each single item in the array in handled"
     }
   },
   {
-    "__docId__": 76,
+    "__docId__": 74,
     "kind": "file",
     "name": "lib/sort.js",
-    "content": "\r\nimport { retrieveVotes } from \"./helpers\"\r\n\r\nconst sortVotes = votes => {\r\n  votes = retrieveVotes(votes)\r\n\r\n  const upVotes = votes.filter((vote) => vote.percent > 0)\r\n  const downVotes = votes.filter((vote) => vote.percent < 0)\r\n  const removedVotes = votes.filter((vote) => vote.percent === 0)\r\n\r\n  return {\r\n    upVotes, downVotes, removedVotes\r\n  }\r\n}\r\n\r\nconst sort = { sortVotes }\r\n\r\nexport {\r\n  sort as default, sortVotes\r\n}\r\n",
+    "content": "\r\nimport { retrieveVotes } from \"./helpers\"\r\n\r\n/**\r\n *  Returns an object of sorted Steem votes by upvotes, downvotes and removedvotes\r\n *  @param {(object|array)} votes Steem post data object or active_votes array\r\n *  @returns {object} Return sorted arrays in object\r\n *\r\n *  @example\r\n *  let sort = sortVotes(postData || postData.active_votes)\r\n *  console.log(sort)\r\n *  `\r\n *    {upVotes: [...], downVotes: [...], removedVotes: [...]}\r\n *  `\r\n */\r\nconst sortVotes = votes => {\r\n  votes = retrieveVotes(votes)\r\n\r\n  const upVotes = votes.filter((vote) => vote.percent > 0)\r\n  const downVotes = votes.filter((vote) => vote.percent < 0)\r\n  const removedVotes = votes.filter((vote) => vote.percent === 0)\r\n\r\n  return {\r\n    upVotes, downVotes, removedVotes\r\n  }\r\n}\r\n\r\nconst sort = { sortVotes }\r\n\r\nexport {\r\n  sort as default, sortVotes\r\n}\r\n",
     "static": true,
     "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/steem inc/projects/steem sdk/lib/js/utils/src/lib/sort.js",
     "access": "public",
@@ -1293,7 +1477,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 77,
+    "__docId__": 75,
     "kind": "variable",
     "name": "sort",
     "memberof": "lib/sort.js",
@@ -1304,7 +1488,7 @@
     "importPath": "steem-utils/lib/sort.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 16,
+    "lineNumber": 28,
     "undocument": true,
     "type": {
       "types": [
@@ -1313,7 +1497,7 @@
     }
   },
   {
-    "__docId__": 78,
+    "__docId__": 76,
     "kind": "function",
     "name": "sortVotes",
     "memberof": "lib/sort.js",
@@ -1325,28 +1509,44 @@
     "export": true,
     "importPath": "steem-utils/lib/sort.js",
     "importStyle": "{sortVotes}",
-    "description": null,
-    "lineNumber": 4,
-    "undocument": true,
+    "description": " Returns an object of sorted Steem votes by upvotes, downvotes and removedvotes",
+    "examples": [
+      " let sort = sortVotes(postData || postData.active_votes)\n console.log(sort)\n `\n   {upVotes: [...], downVotes: [...], removedVotes: [...]}\n `"
+    ],
+    "lineNumber": 16,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} Return sorted arrays in object"
+      }
+    ],
     "params": [
       {
-        "name": "votes",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "object",
+          "array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "votes",
+        "description": "Steem post data object or active_votes array"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "{\"upVotes\": *, \"downVotes\": *, \"removedVotes\": *}"
-      ]
+        "object"
+      ],
+      "spread": false,
+      "description": "Return sorted arrays in object"
     }
   },
   {
-    "__docId__": 79,
+    "__docId__": 77,
     "kind": "file",
     "name": "lib/stats.js",
-    "content": "\r\nimport { retrieveVotes } from \"./helpers\"\r\n\r\nconst voteStats = votes => {\r\n  votes = retrieveVotes(votes)\r\n\r\n  const total = votes.length\r\n  const upVotes = votes.filter((vote) => vote.percent > 0).length\r\n  const downVotes = votes.filter((vote) => vote.percent < 0).length\r\n  const removedVotes = votes.filter((vote) => vote.percent === 0).length\r\n\r\n  return {\r\n    total, upVotes, downVotes, removedVotes\r\n  }\r\n}\r\n\r\nconst stats = { voteStats }\r\n\r\nexport {\r\n  stats as default, voteStats\r\n}\r\n",
+    "content": "\r\nimport { retrieveVotes } from \"./helpers\"\r\n\r\n/**\r\n *  Returns stats about a Steem votes object\r\n *  @param {(object|array)} votes Steem post data object or active_votes array\r\n *  @returns {object} Return stats object\r\n *\r\n *  @example\r\n *  let stats = voteStats(postData || postData.active_votes)\r\n *  console.log(stats)\r\n *  `\r\n *    {total: \"...\", upVotes: \"...\", downVotes: \"...\", removedVotes: \"...\"}\r\n *  `\r\n */\r\nconst voteStats = votes => {\r\n  votes = retrieveVotes(votes)\r\n\r\n  const total = votes.length\r\n  const upVotes = votes.filter((vote) => vote.percent > 0).length\r\n  const downVotes = votes.filter((vote) => vote.percent < 0).length\r\n  const removedVotes = votes.filter((vote) => vote.percent === 0).length\r\n\r\n  return {\r\n    total, upVotes, downVotes, removedVotes\r\n  }\r\n}\r\n\r\nconst stats = { voteStats }\r\n\r\nexport {\r\n  stats as default, voteStats\r\n}\r\n",
     "static": true,
     "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/steem inc/projects/steem sdk/lib/js/utils/src/lib/stats.js",
     "access": "public",
@@ -1354,7 +1554,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 80,
+    "__docId__": 78,
     "kind": "variable",
     "name": "stats",
     "memberof": "lib/stats.js",
@@ -1365,7 +1565,7 @@
     "importPath": "steem-utils/lib/stats.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 17,
+    "lineNumber": 29,
     "undocument": true,
     "type": {
       "types": [
@@ -1374,7 +1574,7 @@
     }
   },
   {
-    "__docId__": 81,
+    "__docId__": 79,
     "kind": "function",
     "name": "voteStats",
     "memberof": "lib/stats.js",
@@ -1386,28 +1586,44 @@
     "export": true,
     "importPath": "steem-utils/lib/stats.js",
     "importStyle": "{voteStats}",
-    "description": null,
-    "lineNumber": 4,
-    "undocument": true,
+    "description": " Returns stats about a Steem votes object",
+    "examples": [
+      " let stats = voteStats(postData || postData.active_votes)\n console.log(stats)\n `\n   {total: \"...\", upVotes: \"...\", downVotes: \"...\", removedVotes: \"...\"}\n `"
+    ],
+    "lineNumber": 16,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} Return stats object"
+      }
+    ],
     "params": [
       {
-        "name": "votes",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "object",
+          "array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "votes",
+        "description": "Steem post data object or active_votes array"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "{\"total\": *, \"upVotes\": *, \"downVotes\": *, \"removedVotes\": *}"
-      ]
+        "object"
+      ],
+      "spread": false,
+      "description": "Return stats object"
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 80,
     "kind": "file",
     "name": "lib/validate.js",
-    "content": "\r\n/**\r\n* This validates account name\r\n*/\r\nconst validateAccount = value => {\r\n  let i, label, len\r\n\r\n  if (!value) {\r\n    return \"Account name should not be empty\"\r\n  }\r\n\r\n  const length = value.length\r\n\r\n  if (length < 3) {\r\n    return \"Account name should be at least 3 characters long\"\r\n  }\r\n  if (length > 16) {\r\n    return \"Account name should be not be more than 16 characters\"\r\n  }\r\n\r\n  const ref = value.split(\".\")\r\n\r\n  for (i = 0, len = ref.length; i < len; i++) {\r\n    label = ref[i]\r\n    if (!/^[a-z]/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!/^[a-z0-9-]*$/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (/--/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!/[a-z0-9]$/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!(label.length >= 3)) {\r\n      return \"Invalid account\"\r\n    }\r\n  }\r\n  return true\r\n}\r\n\r\nconst validate = { validateAccount }\r\n\r\nexport {\r\n  validate as default, validateAccount\r\n}\r\n",
+    "content": "\r\n/**\r\n *  Validates a Steem account username\r\n *  @param {string} username Steem account username\r\n *  @returns {(string|boolean)} Returns error message if account is invalid or `true` if valid\r\n *\r\n *  @example\r\n *  let valid = validateAccount('la$tkiller')\r\n *  console.log(valid)\r\n *  `\r\n *    Invalid account\r\n *  `\r\n *  let valid = validateAccount('lastkiller')\r\n *  console.log(valid)\r\n *  `\r\n *    true\r\n *  `\r\n */\r\nconst validateAccount = username => {\r\n  let i, label, len\r\n\r\n  if (!username) {\r\n    return \"Account name should not be empty\"\r\n  }\r\n\r\n  const length = username.length\r\n\r\n  if (length < 3) {\r\n    return \"Account name should be at least 3 characters long\"\r\n  }\r\n  if (length > 16) {\r\n    return \"Account name should be not be more than 16 characters\"\r\n  }\r\n\r\n  const ref = username.split(\".\")\r\n\r\n  for (i = 0, len = ref.length; i < len; i++) {\r\n    label = ref[i]\r\n    if (!/^[a-z]/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!/^[a-z0-9-]*$/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (/--/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!/[a-z0-9]$/.test(label)) {\r\n      return \"Invalid account\"\r\n    }\r\n    if (!(label.length >= 3)) {\r\n      return \"Invalid account\"\r\n    }\r\n  }\r\n  return true\r\n}\r\n\r\nconst validate = { validateAccount }\r\n\r\nexport {\r\n  validate as default, validateAccount\r\n}\r\n",
     "static": true,
     "longname": "C:/Users/ASUS Ultrabook/Desktop/Projects/steem inc/projects/steem sdk/lib/js/utils/src/lib/validate.js",
     "access": "public",
@@ -1415,7 +1631,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 83,
+    "__docId__": 81,
     "kind": "variable",
     "name": "validate",
     "memberof": "lib/validate.js",
@@ -1426,7 +1642,7 @@
     "importPath": "steem-utils/lib/validate.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 44,
+    "lineNumber": 58,
     "undocument": true,
     "type": {
       "types": [
@@ -1435,7 +1651,7 @@
     }
   },
   {
-    "__docId__": 84,
+    "__docId__": 82,
     "kind": "function",
     "name": "validateAccount",
     "memberof": "lib/validate.js",
@@ -1447,25 +1663,42 @@
     "export": true,
     "importPath": "steem-utils/lib/validate.js",
     "importStyle": "{validateAccount}",
-    "description": "This validates account name",
-    "lineNumber": 5,
+    "description": " Validates a Steem account username",
+    "examples": [
+      " let valid = validateAccount('la$tkiller')\n console.log(valid)\n `\n   Invalid account\n `\n let valid = validateAccount('lastkiller')\n console.log(valid)\n `\n   true\n `"
+    ],
+    "lineNumber": 19,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{(string|boolean)} Returns error message if account is invalid or `true` if valid"
+      }
+    ],
     "params": [
       {
-        "name": "value",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "username",
+        "description": "Steem account username"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
+        "string",
         "boolean"
-      ]
+      ],
+      "spread": false,
+      "description": "Returns error message if account is invalid or `true` if valid"
     }
   },
   {
     "kind": "index",
-    "content": "# Steem utils\n\nSwiss army knife for steem ops\n\n## Installation\n\n### Node\n\n`yarn add steem-utils`\n\n### Browser\n\n`<script src=\"https://unpkg.com/steem-utils\"></script>`\n\n## Documentation\n\n[utils-js.steemsdk.com](utils-js.steemsdk.com)\n",
+    "content": "# Steem utils\n\nSwiss army knife for Steem ops\n\n## Installation\n\n### Node\n\n`yarn add steem-utils`\n\n### Browser\n\n`<script src=\"https://unpkg.com/steem-utils\"></script>`\n\n## Documentation\n\n[https://utils-js.steemsdk.com](https://utils-js.steemsdk.com)\n",
     "longname": "C:\\Users\\ASUS Ultrabook\\Desktop\\Projects\\steem inc\\projects\\steem sdk\\lib\\js\\utils\\README.md",
     "name": "./README.md",
     "static": true,
@@ -1473,7 +1706,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"steem-utils\",\n  \"version\": \"0.6.0\",\n  \"description\": \"Swiss army knife of helper functions for Steem\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js\",\n    \"build\": \"cross-env NODE_ENV=production webpack --config config/webpack.prod.js\",\n    \"docs\": \"./node_modules/.bin/esdoc\",\n    \"pub\": \"npm version minor --force -m \\\"version %s\\\"\",\n    \"preversion\": \"npm run docs\",\n    \"version\": \"git add -A\",\n    \"postversion\": \"npm publish && git push\"\n  },\n  \"keywords\": [\n    \"css\",\n    \"generic\"\n  ],\n  \"author\": \"Steem SDK (https://steemsdk.com/)\",\n  \"license\": \"MIT\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.5.5\",\n    \"@babel/plugin-proposal-class-properties\": \"^7.5.5\",\n    \"@babel/plugin-transform-runtime\": \"^7.7.6\",\n    \"@babel/preset-env\": \"^7.5.5\",\n    \"babel-eslint\": \"^10.0.3\",\n    \"babel-loader\": \"^8.0.6\",\n    \"clean-webpack-plugin\": \"^3.0.0\",\n    \"copy-webpack-plugin\": \"^5.0.4\",\n    \"cross-env\": \"^5.2.1\",\n    \"css-loader\": \"^3.2.0\",\n    \"cssnano\": \"^4.1.10\",\n    \"dsteem\": \"^0.11.3\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-brand-plugin\": \"^1.0.1\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"esdoc-undocumented-identifier-plugin\": \"^1.0.0\",\n    \"esdoc-unexported-identifier-plugin\": \"^1.0.0\",\n    \"eslint\": \"^6.2.2\",\n    \"eslint-config-standard\": \"^14.1.0\",\n    \"eslint-friendly-formatter\": \"^4.0.1\",\n    \"eslint-loader\": \"^3.0.0\",\n    \"eslint-plugin-import\": \"^2.19.1\",\n    \"eslint-plugin-node\": \"^10.0.0\",\n    \"eslint-plugin-promise\": \"^4.2.1\",\n    \"eslint-plugin-standard\": \"^4.0.1\",\n    \"file-loader\": \"^4.2.0\",\n    \"html-webpack-plugin\": \"^3.2.0\",\n    \"mini-css-extract-plugin\": \"^0.8.0\",\n    \"node-sass\": \"^4.12.0\",\n    \"optimize-css-assets-webpack-plugin\": \"^5.0.3\",\n    \"postcss-loader\": \"^3.0.0\",\n    \"postcss-preset-env\": \"^6.7.0\",\n    \"sass-loader\": \"^8.0.0\",\n    \"style-loader\": \"^1.0.0\",\n    \"terser-webpack-plugin\": \"^1.4.1\",\n    \"url-loader\": \"^2.1.0\",\n    \"webpack\": \"^4.39.3\",\n    \"webpack-cli\": \"^3.3.7\",\n    \"webpack-dev-server\": \"^3.8.0\",\n    \"webpack-merge\": \"^4.2.2\"\n  },\n  \"dependencies\": {\n    \"@babel/runtime\": \"^7.7.6\",\n    \"@esteemapp/esteem-render-helpers\": \"^1.2.6\",\n    \"steem\": \"^0.7.10\",\n    \"steem-content-renderer\": \"^2.1.1\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/steem-sdk/steem-utils\"\n  },\n  \"contributors\": [\n    \"Dzivenu <makafuigdzivenu@gmail.com> (https://dzivenu.com/)\"\n  ],\n  \"bugs\": {\n    \"url\": \"https://github.com/steemsdk/steem-utils/issues\"\n  },\n  \"homepage\": \"https://steemsdk.com/\"\n}\n",
+    "content": "{\n  \"name\": \"steem-utils\",\n  \"version\": \"0.7.0\",\n  \"description\": \"Swiss army knife of helper functions for Steem\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js\",\n    \"build\": \"cross-env NODE_ENV=production webpack --config config/webpack.prod.js\",\n    \"docs\": \"./node_modules/.bin/esdoc\",\n    \"pub\": \"npm version minor --force -m \\\"version %s\\\"\",\n    \"preversion\": \"npm run docs\",\n    \"version\": \"git add -A\",\n    \"postversion\": \"npm publish && git push\"\n  },\n  \"keywords\": [\n    \"css\",\n    \"generic\"\n  ],\n  \"author\": \"Steem SDK (https://steemsdk.com/)\",\n  \"license\": \"MIT\",\n  \"devDependencies\": {\n    \"@babel/core\": \"^7.5.5\",\n    \"@babel/plugin-proposal-class-properties\": \"^7.5.5\",\n    \"@babel/plugin-transform-runtime\": \"^7.7.6\",\n    \"@babel/preset-env\": \"^7.5.5\",\n    \"babel-eslint\": \"^10.0.3\",\n    \"babel-loader\": \"^8.0.6\",\n    \"clean-webpack-plugin\": \"^3.0.0\",\n    \"copy-webpack-plugin\": \"^5.0.4\",\n    \"cross-env\": \"^5.2.1\",\n    \"css-loader\": \"^3.2.0\",\n    \"cssnano\": \"^4.1.10\",\n    \"dsteem\": \"^0.11.3\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-brand-plugin\": \"^1.0.1\",\n    \"esdoc-ecmascript-proposal-plugin\": \"^1.0.0\",\n    \"esdoc-inject-style-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"esdoc-undocumented-identifier-plugin\": \"^1.0.0\",\n    \"esdoc-unexported-identifier-plugin\": \"^1.0.0\",\n    \"eslint\": \"^6.2.2\",\n    \"eslint-config-standard\": \"^14.1.0\",\n    \"eslint-friendly-formatter\": \"^4.0.1\",\n    \"eslint-loader\": \"^3.0.0\",\n    \"eslint-plugin-import\": \"^2.19.1\",\n    \"eslint-plugin-node\": \"^10.0.0\",\n    \"eslint-plugin-promise\": \"^4.2.1\",\n    \"eslint-plugin-standard\": \"^4.0.1\",\n    \"file-loader\": \"^4.2.0\",\n    \"html-webpack-plugin\": \"^3.2.0\",\n    \"mini-css-extract-plugin\": \"^0.8.0\",\n    \"node-sass\": \"^4.12.0\",\n    \"optimize-css-assets-webpack-plugin\": \"^5.0.3\",\n    \"postcss-loader\": \"^3.0.0\",\n    \"postcss-preset-env\": \"^6.7.0\",\n    \"sass-loader\": \"^8.0.0\",\n    \"style-loader\": \"^1.0.0\",\n    \"terser-webpack-plugin\": \"^1.4.1\",\n    \"url-loader\": \"^2.1.0\",\n    \"webpack\": \"^4.39.3\",\n    \"webpack-cli\": \"^3.3.7\",\n    \"webpack-dev-server\": \"^3.8.0\",\n    \"webpack-merge\": \"^4.2.2\"\n  },\n  \"dependencies\": {\n    \"@babel/runtime\": \"^7.7.6\",\n    \"@esteemapp/esteem-render-helpers\": \"^1.2.6\",\n    \"steem\": \"^0.7.10\",\n    \"steem-content-renderer\": \"^2.1.1\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/steem-sdk/steem-utils\"\n  },\n  \"contributors\": [\n    \"Dzivenu <makafuigdzivenu@gmail.com> (https://dzivenu.com/)\"\n  ],\n  \"bugs\": {\n    \"url\": \"https://github.com/steemsdk/steem-utils/issues\"\n  },\n  \"homepage\": \"https://steemsdk.com/\"\n}\n",
     "longname": "C:\\Users\\ASUS Ultrabook\\Desktop\\Projects\\steem inc\\projects\\steem sdk\\lib\\js\\utils\\package.json",
     "name": "package.json",
     "static": true,

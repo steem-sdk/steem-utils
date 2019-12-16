@@ -1,6 +1,18 @@
 
 import { retrieveVotes } from "./helpers"
 
+/**
+ *  Returns stats about a Steem votes object
+ *  @param {(object|array)} votes Steem post data object or active_votes array
+ *  @returns {object} Return stats object
+ *
+ *  @example
+ *  let stats = voteStats(postData || postData.active_votes)
+ *  console.log(stats)
+ *  `
+ *    {total: "...", upVotes: "...", downVotes: "...", removedVotes: "..."}
+ *  `
+ */
 const voteStats = votes => {
   votes = retrieveVotes(votes)
 

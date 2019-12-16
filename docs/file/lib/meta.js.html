@@ -35,19 +35,17 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVests">formatVests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-account">account</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-accountMeta">accountMeta</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-meta">meta</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-postMeta">postMeta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePost">parsePost</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePosts">parsePosts</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sortVotes">sortVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-voteStats">voteStats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validateAccount">validateAccount</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_100_PERCENT">STEEMIT_100_PERCENT</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS">STEEMIT_VOTE_REGENERATION_SECONDS</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-lib">lib</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parse">parse</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sort">sort</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stats">stats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-validate">validate</a></span></span></li>
@@ -62,10 +60,61 @@ import { postBodySummary, renderPostBody } from &quot;@esteemapp/esteem-render-h
 import { summaryCount } from &quot;./constants&quot;
 import { formatPayout, formatRep, formatImage, formatVotingPower } from &quot;./format&quot;
 
-const meta = (data, config = {}) =&gt; data.author ? post(data, config) : account(data, config)
+/**
+ *  Returns meta data from Steem post or account data
+ *  @param {object} data Steem account or post data
+ *  @param {object} config config for meta
+ *  @returns {object} Returns object which contains meta data about the input account or post data.
+ *  For `meta(accountData)` see {@link accountMeta} and for `meta(postData)` see {@link postMeta}
+ *
+ *  @example
+ *  let metaData = meta(accountData || postData)
+ *  console.log(metaData)
+ */
+const meta = (data, config = {}) =&gt; data.author ? postMeta(data, config) : accountMeta(data, config)
 
-const account = (acc, config) =&gt; {
-  const metadata = JSON.parse(acc.json_metadata || &quot;{}&quot;)
+/**
+ *  Returns meta data from Steem account data
+ *  @param {object} data Steem account data
+ *  @param {object} config config for meta
+ *  @returns {object} Returns object which contains meta data about the input account data
+ *
+ *  @example
+ *  let accountMetaData = accountMeta(accountData)
+ *  console.log(accountMetaData)
+ *  `
+ *    // profile
+ *    name: &quot;...&quot;,
+ *    about: &quot;...&quot;,
+ *    avatar: &quot;...&quot;
+ *    username: &quot;...&quot;,
+ *    location: &quot;...&quot;,
+ *    reputation: &quot;...&quot;,
+ *
+ *    // details
+ *    id: &quot;...&quot;,
+ *    created: &quot;...&quot;,
+ *    proxy: &quot;...&quot;,
+ *    post_count: &quot;...&quot;,
+ *    voting_power: &quot;...&quot;,
+ *    can_vote: &quot;...&quot;,
+ *    mined: &quot;...&quot;,
+ *    recovery_account: &quot;...&quot;,
+ *    last_account_recovery: &quot;...&quot;,
+ *    reset_account: &quot;...&quot;,
+ *    comment_count: &quot;...&quot;,
+ *    lifetime_vote_count: &quot;...&quot;
+ *    blockstack: &quot;...&quot;,
+ *    pending_claimed_accounts: &quot;...&quot;,
+ *
+ *    // wallet
+ *    steem: &quot;...&quot;,
+ *    sbd: &quot;...&quot;,
+ *    savings: &quot;...&quot;
+ *  `
+ */
+const accountMeta = (data, config) =&gt; {
+  const metadata = JSON.parse(data.json_metadata || &quot;{}&quot;)
   const profile = metadata.profile || {}
 
   return {
@@ -73,34 +122,53 @@ const account = (acc, config) =&gt; {
     name: profile.name,
     about: profile.about || profile.description || profile.bio,
     avatar: profile.profile_image,
-    username: acc.name,
+    username: data.name,
     location: profile.location,
-    reputation: formatRep(acc.reputation),
+    reputation: formatRep(data.reputation),
 
     // details
-    id: acc.id,
-    created: acc.created,
-    proxy: acc.proxy,
-    post_count: acc.post_count,
-    voting_power: formatVotingPower(acc),
-    can_vote: acc.can_vote,
-    mined: acc.mined,
-    recovery_account: acc.recovery_account,
-    last_account_recovery: acc.last_account_recovery,
-    reset_account: acc.reset_account,
-    comment_count: acc.comment_count,
-    lifetime_vote_count: acc.lifetime_vote_count,
+    id: data.id,
+    created: data.created,
+    proxy: data.proxy,
+    post_count: data.post_count,
+    voting_power: formatVotingPower(data),
+    can_vote: data.can_vote,
+    mined: data.mined,
+    recovery_account: data.recovery_account,
+    last_account_recovery: data.last_account_recovery,
+    reset_account: data.reset_account,
+    comment_count: data.comment_count,
+    lifetime_vote_count: data.lifetime_vote_count,
     blockstack: profile.blockstack,
-    pending_claimed_accounts: acc.pending_claimed_accounts,
+    pending_claimed_accounts: data.pending_claimed_accounts,
 
     // wallet
-    steem: acc.balance,
-    sbd: acc.sbd_balance,
-    savings: acc.savings_balance
+    steem: data.balance,
+    sbd: data.sbd_balance,
+    savings: data.savings_balance
   }
 }
 
-const post = (data, config) =&gt; {
+/**
+ *  Returns meta data from Steem post data
+ *  @param {object} data Steem post data
+ *  @param {object} config config for meta
+ *  @returns {object} Returns object which contains meta data about the input post data
+ *
+ *  @example
+ *  let postMetaData = postMeta(postData)
+ *  console.log(postMetaData)
+ *  `
+ *    title: &quot;...&quot;,
+ *    summary: &quot;...&quot;
+ *    payout: &quot;...&quot;,
+ *    image: &quot;...&quot;,
+ *    created: &quot;...&quot;,
+ *    comments_count: &quot;...&quot;,
+ *    votes_count: &quot;...&quot;
+ *  `
+ */
+const postMeta = (data, config) =&gt; {
   data.body = renderPostBody(data)
 
   return {
@@ -115,7 +183,7 @@ const post = (data, config) =&gt; {
 }
 
 export {
-  meta as default, account, post
+  meta as default, accountMeta, postMeta
 }
 </code></pre>
 

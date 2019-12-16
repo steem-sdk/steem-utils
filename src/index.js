@@ -15,13 +15,17 @@ async function go () {
   // console.log("go...", input, type)
 
   //
-  const res = await client.database.call("get_content", [author, permlink])
-  console.log(lib.meta(res))
+  // const res = await client.database.call("get_content", [author, permlink])
+  // console.log(res, lib.meta(res))
 
-  const [account] = await client.database.getAccounts([author])
+  const posts = await client.database.getDiscussions("blog", { tag: "dzivenu", limit: 10 })
+  // console.log(posts)
+  console.log(await lib.parse(posts, { meta: { all: true } }))
+
+  // const [account] = await client.database.getAccounts([author])
   // console.log(account)
 
-  console.log(lib.meta(account))
+  // console.log(account, lib.meta(account))
 }
 
 window.go = go

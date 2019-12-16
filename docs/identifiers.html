@@ -35,19 +35,17 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVests">formatVests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-account">account</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-accountMeta">accountMeta</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-meta">meta</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-postMeta">postMeta</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePost">parsePost</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parsePosts">parsePosts</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sortVotes">sortVotes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-voteStats">voteStats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validateAccount">validateAccount</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_100_PERCENT">STEEMIT_100_PERCENT</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS">STEEMIT_VOTE_REGENERATION_SECONDS</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-format">format</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-lib">lib</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-parse">parse</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sort">sort</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stats">stats</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-validate">validate</a></span></span></li>
@@ -80,13 +78,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatImage">formatImage</a></span></span><span class="code" data-ice="signature">(data: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatImage">formatImage</a></span></span><span class="code" data-ice="signature">(data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Extract the first image or potentially featured image for a post</p>
+</div>
       </div>
     </td>
     <td>
@@ -108,13 +107,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatPayout">formatPayout</a></span></span><span class="code" data-ice="signature">(post: <span>*</span>, fix: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatPayout">formatPayout</a></span></span><span class="code" data-ice="signature">(post: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, fix: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Formats a Steem post&apos;s payout, does not discriminate for pending or completed posts. Values are for SBD</p>
+</div>
       </div>
     </td>
     <td>
@@ -136,13 +136,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatRep">formatRep</a></span></span><span class="code" data-ice="signature">(rep2: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatRep">formatRep</a></span></span><span class="code" data-ice="signature">(reputation: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Formats a Steem account&apos;s reputation</p>
+</div>
       </div>
     </td>
     <td>
@@ -164,13 +165,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatVests">formatVests</a></span></span><span class="code" data-ice="signature">(account: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatVests">formatVests</a></span></span><span class="code" data-ice="signature">(account: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Formats a Steem account&apos;s vests</p>
+</div>
       </div>
     </td>
     <td>
@@ -192,13 +194,16 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></span><span class="code" data-ice="signature">(raw: <span><span>*</span><span>[]</span></span>, count: <span>*</span>, downvoted: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): {&quot;votes&quot;: <span>*</span>, &quot;len&quot;: <span>*</span>}</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatVotes">formatVotes</a></span></span><span class="code" data-ice="signature">(raw: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, count: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, downvoted: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Formats a Steem post&apos;s active votes
+ Will sort out removed votes, and order by weight
+ Will trim return array to specified or default <code>count</code> <span>voterCount</span></p>
+</div>
       </div>
     </td>
     <td>
@@ -220,13 +225,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></span><span class="code" data-ice="signature">(account: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-formatVotingPower">formatVotingPower</a></span></span><span class="code" data-ice="signature">(account: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Formats a Steem account&apos;s voting power using the manarbar data</p>
+</div>
       </div>
     </td>
     <td>
@@ -248,13 +254,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-account">account</a></span></span><span class="code" data-ice="signature">(acc: <span>*</span>, config: <span>*</span>): {&quot;name&quot;: <span>*</span>, &quot;about&quot;: <span>*</span>, &quot;avatar&quot;: <span>*</span>, &quot;username&quot;: <span>*</span>, &quot;location&quot;: <span>*</span>, &quot;reputation&quot;: <span>*</span>, &quot;id&quot;: <span>*</span>, &quot;created&quot;: <span>*</span>, &quot;proxy&quot;: <span>*</span>, &quot;post_count&quot;: <span>*</span>, &quot;voting_power&quot;: <span>*</span>, &quot;can_vote&quot;: <span>*</span>, &quot;mined&quot;: <span>*</span>, &quot;recovery_account&quot;: <span>*</span>, &quot;last_account_recovery&quot;: <span>*</span>, &quot;reset_account&quot;: <span>*</span>, &quot;comment_count&quot;: <span>*</span>, &quot;lifetime_vote_count&quot;: <span>*</span>, &quot;blockstack&quot;: <span>*</span>, &quot;pending_claimed_accounts&quot;: <span>*</span>, &quot;steem&quot;: <span>*</span>, &quot;sbd&quot;: <span>*</span>, &quot;savings&quot;: <span>*</span>}</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-accountMeta">accountMeta</a></span></span><span class="code" data-ice="signature">(data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, config: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Returns meta data from Steem account data</p>
+</div>
       </div>
     </td>
     <td>
@@ -276,13 +283,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-meta">meta</a></span></span><span class="code" data-ice="signature">(data: <span>*</span>, config: {})</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-meta">meta</a></span></span><span class="code" data-ice="signature">(data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, config: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Returns meta data from Steem post or account data</p>
+</div>
       </div>
     </td>
     <td>
@@ -304,13 +312,14 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-post">post</a></span></span><span class="code" data-ice="signature">(data: <span>*</span>, config: <span>*</span>): {&quot;title&quot;: <span>*</span>, &quot;summary&quot;: <span>*</span>, &quot;payout&quot;: <span>*</span>, &quot;image&quot;: <span>*</span>, &quot;created&quot;: <span>*</span>, &quot;comments_count&quot;: <span>*</span>, &quot;votes_count&quot;: <span>*</span>}</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-postMeta">postMeta</a></span></span><span class="code" data-ice="signature">(data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, config: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Returns meta data from Steem post data</p>
+</div>
       </div>
     </td>
     <td>
@@ -332,13 +341,43 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-parsePost">parsePost</a></span></span><span class="code" data-ice="signature">(content: <span>*</span>, options: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span><span class="code" data-ice="signature">(content: <span>content</span>, config: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
+        <div data-ice="description"><p> Parses a Steem post object or array of Steem post body strings or objects</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          <span data-ice="kind-icon" class="kind-function">F</span>
+          
+          
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-parsePost">parsePost</a></span></span><span class="code" data-ice="signature">(content: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
         
+        
+        <div data-ice="description"><p> Parses a Steem post object or body string</p>
+</div>
       </div>
     </td>
     <td>
@@ -360,97 +399,13 @@
           <span data-ice="kind-icon" class="kind-function">F</span>
           <span data-ice="async">async</span>
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-parsePosts">parsePosts</a></span></span><span class="code" data-ice="signature">(content: <span>*</span>, options: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-parsePosts">parsePosts</a></span></span><span class="code" data-ice="signature">(content: <span>array</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span>array</span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-function">F</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-sortVotes">sortVotes</a></span></span><span class="code" data-ice="signature">(votes: <span>*</span>): {&quot;upVotes&quot;: <span>*</span>, &quot;downVotes&quot;: <span>*</span>, &quot;removedVotes&quot;: <span>*</span>}</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-function">F</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-voteStats">voteStats</a></span></span><span class="code" data-ice="signature">(votes: <span>*</span>): {&quot;total&quot;: <span>*</span>, &quot;upVotes&quot;: <span>*</span>, &quot;downVotes&quot;: <span>*</span>, &quot;removedVotes&quot;: <span>*</span>}</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-function">F</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-validateAccount">validateAccount</a></span></span><span class="code" data-ice="signature">(value: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>This validates account name</p>
+        <div data-ice="description"><p> Parses multiple Steem post objects or body strings</p>
 </div>
       </div>
     </td>
@@ -470,16 +425,17 @@
     <td>
       <div>
         <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
+          <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_100_PERCENT">STEEMIT_100_PERCENT</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-sortVotes">sortVotes</a></span></span><span class="code" data-ice="signature">(votes: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p> Returns an object of sorted Steem votes by upvotes, downvotes and removedvotes</p>
+</div>
       </div>
     </td>
     <td>
@@ -498,16 +454,46 @@
     <td>
       <div>
         <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
+          <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS">STEEMIT_VOTE_REGENERATION_SECONDS</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-voteStats">voteStats</a></span></span><span class="code" data-ice="signature">(votes: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
+        <div data-ice="description"><p> Returns stats about a Steem votes object</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          <span data-ice="kind-icon" class="kind-function">F</span>
+          
+          
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-validateAccount">validateAccount</a></span></span><span class="code" data-ice="signature">(username: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+        </p>
+      </div>
+      <div>
         
+        
+        <div data-ice="description"><p> Validates a Steem account username</p>
+</div>
       </div>
     </td>
     <td>
@@ -558,34 +544,6 @@
           
           
           <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-lib">lib</a></span></span><span class="code" data-ice="signature">: {&quot;stats&quot;: <span>*</span>, &quot;sort&quot;: <span>*</span>, &quot;parse&quot;: <span>*</span>, &quot;format&quot;: <span>*</span>, &quot;meta&quot;: <span>*</span>}</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          <span data-ice="kind-icon" class="kind-variable">V</span>
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-parse">parse</a></span></span><span class="code" data-ice="signature">: {&quot;parsePost&quot;: <span>*</span>, &quot;parsePosts&quot;: <span>*</span>}</span>
         </p>
       </div>
       <div>

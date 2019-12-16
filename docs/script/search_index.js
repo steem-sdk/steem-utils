@@ -1,20 +1,8 @@
 window.esdocSearchIndex = [
   [
-    "steem-utils/lib/format.js~steemit_100_percent",
-    "variable/index.html#static-variable-STEEMIT_100_PERCENT",
-    "<span>STEEMIT_100_PERCENT</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
-    "variable"
-  ],
-  [
-    "steem-utils/lib/format.js~steemit_vote_regeneration_seconds",
-    "variable/index.html#static-variable-STEEMIT_VOTE_REGENERATION_SECONDS",
-    "<span>STEEMIT_VOTE_REGENERATION_SECONDS</span> <span class=\"search-result-import-path\">steem-utils/lib/format.js</span>",
-    "variable"
-  ],
-  [
-    "steem-utils/lib/meta.js~account",
-    "function/index.html#static-function-account",
-    "<span>account</span> <span class=\"search-result-import-path\">steem-utils/lib/meta.js</span>",
+    "steem-utils/lib/meta.js~accountmeta",
+    "function/index.html#static-function-accountMeta",
+    "<span>accountMeta</span> <span class=\"search-result-import-path\">steem-utils/lib/meta.js</span>",
     "function"
   ],
   [
@@ -73,9 +61,9 @@ window.esdocSearchIndex = [
   ],
   [
     "steem-utils/lib/parse.js~parse",
-    "variable/index.html#static-variable-parse",
+    "function/index.html#static-function-parse",
     "<span>parse</span> <span class=\"search-result-import-path\">steem-utils/lib/parse.js</span>",
-    "variable"
+    "function"
   ],
   [
     "steem-utils/lib/parse.js~parsepost",
@@ -90,9 +78,9 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "steem-utils/lib/meta.js~post",
-    "function/index.html#static-function-post",
-    "<span>post</span> <span class=\"search-result-import-path\">steem-utils/lib/meta.js</span>",
+    "steem-utils/lib/meta.js~postmeta",
+    "function/index.html#static-function-postMeta",
+    "<span>postMeta</span> <span class=\"search-result-import-path\">steem-utils/lib/meta.js</span>",
     "function"
   ],
   [
